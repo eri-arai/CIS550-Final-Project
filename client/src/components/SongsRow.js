@@ -10,8 +10,8 @@ export default class SongsRow extends React.Component {
 		return (
 			<div className="songResults">
 				{/* {this.props.movie.title} */}
-				<div className="name">{this.props.name}</div>
-				<div className="artists">{this.props.artists}</div>
+				<div className="song_title">{this.props.song_title}</div>
+				<div className="artist_name">{this.props.artist_name}</div>
 				<div className="acousticness">{this.props.acousticness}</div>
 				<div className="danceability">{this.props.danceability}</div>
 			</div>

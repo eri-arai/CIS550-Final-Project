@@ -73,7 +73,8 @@ function getSongsByTitle(req, res) {
   console.log(inputName);
   var query = `
     SELECT *
-    FROM song
+    FROM song s JOIN played_by pb ON s.song_id = pb.song_id
+    JOIN musical_characteristics mc ON s.song_id = mc.song_id
     WHERE song_title = '${inputName}';
   `;
   connection.query(query, function(err, rows, fields) {
@@ -87,8 +88,8 @@ function getSongsByTitle(req, res) {
 // Get all artists. Again, only useful for testing stuff.
 function getAllArtists(req, res) {
   var query = `
-    SELECT DISTINCT artists
-    FROM Spotify;
+    SELECT DISTINCT artist_name
+    FROM artist;
   `;
   connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
@@ -143,21 +144,21 @@ function getCharacteristic(req, res) {
   if (inputValue == 'uplifting'){
     query = `
     SELECT *
-    FROM musical_charcteristics
+    FROM musical_characteristics mc JOIN song s ON mc.song_id = s.song_id JOIN played_by pb ON s.song_id = pb.song_id
     WHERE release_year > 1970 AND loudness > -30 AND tempo > 70 AND acousticness > 0.5 AND speechiness > 0.5 AND mode =1 AND explicit < 0.5
     ;
   `;
   } else if (inputValue == 'calming'){
     query = `
     SELECT *
-    FROM musical_charcteristics
+    FROM musical_characteristics mc JOIN song s ON mc.song_id = s.song_id JOIN played_by pb ON s.song_id = pb.song_id
     WHERE release_year > 1970 AND loudness < -30 AND tempo < 70 AND acousticness > 0.7 AND speechiness < 0.5 AND mode > 0.5 AND liveness < 0.3 AND explicit < 0.5
     ;
   `;
   } else if (inputValue == 'highenergy'){
     query = `
     SELECT *
-    FROM musical_charcteristics
+    FROM musical_characteristics mc JOIN song s ON mc.song_id = s.song_id JOIN played_by pb ON s.song_id = pb.song_id
     WHERE release_year > 1970 AND loudness > -30 AND tempo > 100 AND speechiness > 0.5 AND liveness >  0.5 AND danceability > 0.5 AND explicit > 0.5
     ;
   `;
@@ -165,7 +166,7 @@ function getCharacteristic(req, res) {
     query = `
     SELECT COLUMN_NAME 
     FROM INFORMATION_SCHEMA.COLUMNS
-    WHERE TABLE_NAME = N'musical_charcteristics'
+    WHERE TABLE_NAME = N'musical_characteristics'
     ;
   `;
   }

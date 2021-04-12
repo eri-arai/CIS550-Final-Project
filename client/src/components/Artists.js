@@ -42,7 +42,7 @@ export default class Artists extends React.Component {
 			let artistsDivs = artistsList.map((artist, i) => 
 				// <RecommendationsRow key={recommendation.id} artist={recommendation} />
 				<div id="results" key={i} className="results-container">
-					<ArtistsRow song={artist.song} week_id={artist.week_id} peak_position={artist.peak_position} weeks_on_chart={artist.weeks_on_chart}/>
+					<ArtistsRow artist_name={artist.artist_name}/>
 				</div>
 				
 			);
@@ -71,10 +71,8 @@ export default class Artists extends React.Component {
 			    		<div className="header-container">
 			    			{/* <div className="h6">You may like ...</div> */}
 			    			<div className="headers">
-			    				<div className="header"><strong>Title</strong></div>
-			    				<div className="header"><strong>Week</strong></div>
-					            <div className="header"><strong>Peak Position</strong></div>
-					            <div className="header"><strong>Weeks on Chart</strong></div>
+			    				<div className="header"><strong>Artist Name</strong></div>
+
 			    			</div>
 			    		</div>
 			    		<div className="results-container" id="results">

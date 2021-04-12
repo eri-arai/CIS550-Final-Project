@@ -77,7 +77,7 @@ export default class Characteristics extends React.Component {
 			let songDivs = songList.map((song, i) => 
 				// <RecommendationsRow key={recommendation.id} movie={recommendation} />
 				<div id="results" key={i} className="results-container">
-					<CharacteristicRow name={song.name} artists={song.artists} acousticness={song.acousticness} danceability={song.danceability}/>
+					<CharacteristicRow song_title={song.song_title} artist_name={song.artist_name} acousticness={song.acousticness} danceability={song.danceability}/>
 				</div>
 				
 			);
@@ -111,8 +111,8 @@ export default class Characteristics extends React.Component {
 			      <div className="jumbotron">
 			        <div className="song-container">
 			          <div className="song">
-			            <div className="header"><strong>Song</strong></div>
-						<div className="header"><strong>Artists</strong></div>
+			            <div className="header"><strong>Song Title</strong></div>
+						<div className="header"><strong>Artist Name</strong></div>
 						<div className="header"><strong>Acousticness</strong></div>
 						<div className="header"><strong>Danceability</strong></div>
 			          </div>

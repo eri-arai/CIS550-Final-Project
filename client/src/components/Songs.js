@@ -41,7 +41,7 @@ export default class Songs extends React.Component {
 			let songsDivs = songsList.map((song, i) => 
 				// <RecommendationsRow key={recommendation.id} song={recommendation} />
 				<div id="results" key={i} className="results-container">
-					<SongsRow name={song.name} artists={song.artists} acousticness={song.acousticness} danceability={song.danceability}/>
+					<SongsRow song_title={song.song_title} artist_name={song.artist_name} acousticness={song.acousticness} danceability={song.danceability}/>
 				</div>
 				
 			);
@@ -70,8 +70,8 @@ export default class Songs extends React.Component {
 			    		<div className="header-container">
 			    			{/* <div className="h6">You may like ...</div> */}
 			    			<div className="headers">
-			    				<div className="header"><strong>Title</strong></div>
-			    				<div className="header"><strong>Artists</strong></div>
+			    				<div className="header"><strong>Song Title</strong></div>
+			    				<div className="header"><strong>Artist Name</strong></div>
 					            <div className="header"><strong>Acousticness</strong></div>
 					            <div className="header"><strong>Danceability</strong></div>
 			    			</div>
