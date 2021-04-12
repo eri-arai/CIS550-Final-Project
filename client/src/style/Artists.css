@@ -1,0 +1,16 @@
+.header-container, .results-container {
+  display: flex;
+  flex-flow: column wrap;
+  /* margin-top: 10px; */
+}
+
+.header-container .headers, .results-container .artistResults {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 40px;
+}
+
+.artistResults .song, .artistResults .week_id, .artistResults .peak_position, .artistResults .weeks_on_chart, .headers .header {
+  flex: 1 0 25%;
+}

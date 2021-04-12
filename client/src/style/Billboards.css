@@ -1,0 +1,66 @@
+main { margin: auto; max-width: 960px; }
+
+
+.song-container {
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 10px;
+  background-color:antiquewhite;
+
+}
+
+.song-container .song, .song-container .songResults {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 40px;
+  padding: 0 10px;
+
+  margin: 10px;
+  padding: 0;
+  /* border: 1px solid #e5e5e5; */
+  border-radius: 5px;
+  /* background-color: white; */
+}
+
+.song .header, .songResults .week_position, .songResults .song_title, .songResults .artist_name, .songResults .peak_position, .songResults .weeks_on_chart, .songResults .data {
+  display: flex;
+  flex: 1 0 25%;
+  padding: 0 10px;
+  margin: 5px;
+
+
+}
+
+
+/* just installed */
+.table-container {
+  margin: 10px;
+  padding: 0;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  /* background-color: white; */
+
+}
+
+tr.expandable > td {
+  box-shadow: inset 0 3px 6px -3px rgba(0, 0, 0, .2);
+  padding: 0;
+  background-color:azure;
+
+  margin: 1px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  /* flex: 1 0 25%; */
+
+  
+
+}
+
+tr.expandable > td > .inner {
+  margin: 10px;
+  overflow: hidden;
+  flex: 1 0 25%;
+
+}
