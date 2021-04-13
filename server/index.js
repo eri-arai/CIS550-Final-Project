@@ -29,9 +29,6 @@ app.get('/characteristics', routes.getAllCharacteristics);
 app.get('/characteristics/:characteristic', routes.getCharacteristic);
 
 
-
-
-
 app.listen(8081, () => {
 	console.log(`Server listening on PORT 8081`);
 });

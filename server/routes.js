@@ -141,39 +141,71 @@ function getCharacteristic(req, res) {
   var inputValue = req.params.characteristic;
 
   console.log(inputValue);
-  if (inputValue == 'uplifting'){
-    query = `
+  if (inputValue == 'Uplifting'){
+  query = `
     SELECT *
     FROM musical_characteristics mc JOIN song s ON mc.song_id = s.song_id JOIN played_by pb ON s.song_id = pb.song_id
     WHERE release_year > 1970 AND loudness > -30 AND tempo > 70 AND acousticness > 0.5 AND speechiness > 0.5 AND mode =1 AND explicit < 0.5
     ;
   `;
-  } else if (inputValue == 'calming'){
-    query = `
-    SELECT *
-    FROM musical_characteristics mc JOIN song s ON mc.song_id = s.song_id JOIN played_by pb ON s.song_id = pb.song_id
-    WHERE release_year > 1970 AND loudness < -30 AND tempo < 70 AND acousticness > 0.7 AND speechiness < 0.5 AND mode > 0.5 AND liveness < 0.3 AND explicit < 0.5
-    ;
+  } else if (inputValue == 'Calming'){
+  query = `
+    SELECT DISTINCT song.song_title, 
+    played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    JOIN played_by ON played_by.song_id = m.Song_id
+    WHERE m.loudness < .7 AND m.tempo < 75 AND m.acousticness > .3 
+    AND m.liveness < .7 AND explicit = 0 AND m.popularity > 70
+    AND release_year > 2015
+    GROUP BY song.song_title;
   `;
-  } else if (inputValue == 'highenergy'){
-    query = `
-    SELECT *
-    FROM musical_characteristics mc JOIN song s ON mc.song_id = s.song_id JOIN played_by pb ON s.song_id = pb.song_id
-    WHERE release_year > 1970 AND loudness > -30 AND tempo > 100 AND speechiness > 0.5 AND liveness >  0.5 AND danceability > 0.5 AND explicit > 0.5
-    ;
+  } else if (inputValue == 'Energetic'){
+  query = `
+    SELECT DISTINCT song.song_title, 
+    played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    JOIN played_by ON played_by.song_id = m.Song_id
+    WHERE m.energy > .7 AND m.tempo > 60 AND m.popularity > 70 AND release_year > 2015
+    GROUP BY song.song_title;
   `;
-  } else {
+  } else if (inputValue == 'Gloomy') {
     query = `
-    SELECT COLUMN_NAME 
-    FROM INFORMATION_SCHEMA.COLUMNS
-    WHERE TABLE_NAME = N'musical_characteristics'
-    ;
+    SELECT DISTINCT song.song_title, 
+    played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    JOIN played_by ON played_by.song_id = m.Song_id
+    WHERE m.energy < .6 AND m.tempo < 60 AND m.danceability < .6 AND m.popularity > 70 AND release_year > 2015
+    GROUP BY song.song_title;
   `;
   }
-  
-  
-  
-  connection.query(query, function(err, rows, fields) {
+  else if (inputValue == 'Acoustic') {
+    query = `
+    SELECT DISTINCT song.song_title, 
+    played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    JOIN played_by ON played_by.song_id = m.Song_id
+    WHERE m.acousticness > .5 AND m.popularity > 70 AND release_year > 2015
+    GROUP BY song.song_title;
+  `;
+  }
+  else if (inputValue == 'Dancing') {
+    query = `
+      SELECT DISTINCT song.song_title, 
+      played_by.artist_name AS artist_name
+      FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+      JOIN played_by ON played_by.song_id = m.Song_id
+      WHERE m.energy > .7 AND m.tempo > 60 AND m.danceability > .6 AND m.popularity > 70 AND release_year > 2015
+      GROUP BY song.song_title;
+    `;
+  }
+  else {
+   query = `
+    SELECT COLUMN_NAME 
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_NAME = N'musical_characteristics';
+  `;
+  }
+connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
     else {
       res.json(rows);
@@ -181,6 +213,9 @@ function getCharacteristic(req, res) {
   });
 };
 
+
+  
+  
 // The exported functions, which can be accessed in index.js.
 module.exports = {
   getAllBillboards: getAllBillboards,
@@ -192,5 +227,4 @@ module.exports = {
   getAllCharacteristics: getAllCharacteristics,
   getCharacteristic: getCharacteristic
 
-
-}
+};

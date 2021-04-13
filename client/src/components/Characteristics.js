@@ -10,7 +10,7 @@ export default class Characteristics extends React.Component {
 
 		this.state = {
 			selectedCharacteristic: "",
-			characteristics: [],
+			characteristics: ["Uplifting","Calming","Running"],
 			songs: []
 		};
 
@@ -33,20 +33,13 @@ export default class Characteristics extends React.Component {
 		  console.log(err);
 		}).then(characteristicList => {
 		  if (!characteristicList) return;
-		  // Map each genreObj in genreList to an HTML element:
-		  // A button which triggers the showMovies function for each genre.
-		  let characteristicDivs = characteristicList.map((characteristicObj, i) =>
-		//   <option value={characteristicObj.characteristic}>{characteristicObj.characteristic}</option> 
-		  <option value={characteristicObj.COLUMN_NAME}>{characteristicObj.COLUMN_NAME}</option>  
-		  );
-
-	
-		  
 	
 		  // Set the state of the genres list to the value returned by the HTTP response from the server.
 		  this.setState({
 		// characteristics: characteristicDivs
-		characteristics: [<option value={'uplifting'}>{'uplifting'}</option>,<option value={'calming'}>{'calming'}</option>,<option value={'highenergy'}>{'highenergy'}</option>]
+		characteristics: [<option value={'Uplifting'}>{'Uplifting'}</option>,<option value={'Calming'}>{'Calming'}</option>,
+		<option value={'Energetic'}>{'Energetic'}</option>, <option value={'Gloomy'}>{'Gloomy'}</option>, 
+		<option value={'Acoustic'}>{'Acoustic'}</option>,<option value={'Dancing'}>{'Dancing'}</option>,]
 		  });
 		}, err => {
 		  // Print the error if there is one.
@@ -77,7 +70,7 @@ export default class Characteristics extends React.Component {
 			let songDivs = songList.map((song, i) => 
 				// <RecommendationsRow key={recommendation.id} movie={recommendation} />
 				<div id="results" key={i} className="results-container">
-					<CharacteristicRow song_title={song.song_title} artist_name={song.artist_name} acousticness={song.acousticness} danceability={song.danceability}/>
+					<CharacteristicRow song_title={song.song_title} artist_name={song.artist_name}/>
 				</div>
 				
 			);
@@ -113,8 +106,6 @@ export default class Characteristics extends React.Component {
 			          <div className="song">
 			            <div className="header"><strong>Song Title</strong></div>
 						<div className="header"><strong>Artist Name</strong></div>
-						<div className="header"><strong>Acousticness</strong></div>
-						<div className="header"><strong>Danceability</strong></div>
 			          </div>
 			          <div className="song-container" id="results">
 			            {this.state.songs}
