@@ -28,6 +28,61 @@ function getAllBillboards(req, res) {
   });
 };
 
+
+// Get all billboard years for the dropdown options
+function getBillboardChartYear(req, res) {
+  console.log("inputYear");
+
+  var query = `
+    SELECT DISTINCT YEAR(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) AS year
+    FROM weekly_chart wc
+    ORDER BY YEAR(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) DESC;
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+};
+
+// Get all billboard years for the dropdown options
+function getBillboardChartMonth(req, res) {
+  console.log("inputMonth");
+
+  var query = `
+    SELECT DISTINCT MONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) AS month
+    FROM weekly_chart wc
+    ORDER BY MONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y'));
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+};
+
+// Get all billboard years for the dropdown options
+function getBillboardChartDay(req, res) {
+  var inputYear = req.params.year;
+  var inputMonth = req.params.month;
+  console.log("inputDay");
+
+  var query = `
+    SELECT DISTINCT DAYOFMONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) AS day
+    FROM weekly_chart wc
+    WHERE YEAR(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) =  '${inputYear}' AND MONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) = '${inputMonth}'
+    ORDER BY DAYOFMONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y'));
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+};
+
 // Get a specific billboard by week
 function getBillboardChartByWeek(req, res) {
   var inputWeek = req.params.week;
@@ -220,6 +275,9 @@ connection.query(query, function(err, rows, fields) {
 module.exports = {
   getAllBillboards: getAllBillboards,
   getBillboardChartByWeek: getBillboardChartByWeek,
+  getBillboardChartYear: getBillboardChartYear,
+  getBillboardChartMonth: getBillboardChartMonth,
+  getBillboardChartDay: getBillboardChartDay,
   getAllSongs: getAllSongs,
   getSongsByTitle: getSongsByTitle,
   getAllArtists: getAllArtists,

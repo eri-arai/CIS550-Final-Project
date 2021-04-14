@@ -18,6 +18,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/billboards', routes.getAllBillboards);
 app.get('/billboards/:week', routes.getBillboardChartByWeek);
+app.get('/billboardsy/', routes.getBillboardChartYear);
+app.get('/billboardsm/', routes.getBillboardChartMonth);
+app.get('/billboardsd/:year/:month', routes.getBillboardChartDay);
+
 
 app.get('/songs', routes.getAllSongs);
 app.get('/songs/:name', routes.getSongsByTitle);
