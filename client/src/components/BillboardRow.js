@@ -80,14 +80,18 @@ export default class BillboardRow extends React.Component {
 			var explicit = '';
 			if (this.props.explicit == 1) {
 				explicit = 'Yes';
-			} else {
+			} else if (this.props.explicit == 0) {
 				explicit = 'No';
+			} else {
+				explicit = this.props.explicit;
 			}
 			var mode = '';
 			if (this.props.mode == 1) {
 				mode = 'Major';
-			} else {
+			} else if (this.props.mode == 0) {
 				mode = 'Minor';
+			} else {
+				mode = this.props.mode;
 			}
 			var musical_key = '';
 			switch(this.props.musical_key){
@@ -126,6 +130,9 @@ export default class BillboardRow extends React.Component {
 					break;
 				case 11:
 					musical_key = 'B'
+					break;
+				default:
+					musical_key = this.props.musical_key;
 					break;
 			}
 			return [

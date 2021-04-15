@@ -1,6 +1,7 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
 import BillboardRow from './BillboardRow';
+// import BillboardRowTest from './BillboardRowTest';
 import '../style/Billboards.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -18,6 +19,7 @@ export default class Billboards extends React.Component {
 			days: [],
 			billboards: [],
 			songs: []
+			// , songsTest: []
 		};
 
 		this.submitBillboard = this.submitBillboard.bind(this);
@@ -232,8 +234,24 @@ export default class Billboards extends React.Component {
 				
 			);
 
+			// //test
+			// let songDivsTest = songList.map((song, i) => 
+			// 	// <RecommendationsRow key={recommendation.id} movie={recommendation} />
+			// 	<div id="results" key={i} className="results-container">
+			// 		<BillboardRowTest song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
+			// 		release_date={song.release_date} release_year={song.release_year} acousticness={song.acousticness} danceability={song.danceability} 
+			// 		duration_ms={song.duration_ms} energy={song.energy} explicit={song.explicit} instrumentalness={song.instrumentalness} musical_key={song.musical_key}
+			// 		liveness={song.liveness} loudness={song.loudness} mode={song.mode} popularity={song.popularity} speechiness={song.speechiness} 
+			// 		tempo={song.tempo} valence={song.valence} genre={song.genre}/>
+			// 	</div>
+				
+			// );
+
 			this.setState({
 				songs: songDivs,
+				//test
+				// songsTest: songDivsTest
+
 			});
 		});
 	}
@@ -267,6 +285,15 @@ export default class Billboards extends React.Component {
 			        </div>
 			      </div>
 
+					{/* test */}
+				  {/* <table className= 'table-container'>
+					  <tr>
+						<th>Week Position</th>
+						<th>Song Title</th>
+						<th>Artist Name</th>
+					  </tr>
+					  {this.state.songsTest}
+			  	  </table> */}
 
 			      <div className="jumbotron">
 			        <div className="song-container">
@@ -274,6 +301,8 @@ export default class Billboards extends React.Component {
 			            <div className="header"><strong>Week Position</strong></div>
 			            <div className="header"><strong>Song Title</strong></div>
 						<div className="header"><strong>Artist Name</strong></div>
+						{/* <div className="header"><strong>Peak Position</strong></div>
+						<div className="header"><strong>Weeks On Chart</strong></div> */}
 			          </div>
 			          <div className="song-container" id="results">
 			            {this.state.songs}
