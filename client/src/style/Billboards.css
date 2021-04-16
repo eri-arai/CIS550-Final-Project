@@ -1,5 +1,9 @@
 main { margin: auto; max-width: 960px; }
 
+.container {
+  max-width: fit-content;
+  max-width: 1900px;
+}
 
 .song-container {
   display: flex;

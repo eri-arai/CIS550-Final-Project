@@ -57,6 +57,8 @@ export default class Characteristics extends React.Component {
 	submitCharacteristic() {
 		// var fixed = this.state.selectedCharacteristic.replace(/\//g,"-")
 
+		console.log("http://localhost:8081/characteristics/" + this.state.selectedCharacteristic);
+
 		fetch("http://localhost:8081/characteristics/" + this.state.selectedCharacteristic,
 		// fetch("http://localhost:8081/characteristics/" + fixed,
 		{
