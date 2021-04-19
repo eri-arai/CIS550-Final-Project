@@ -260,6 +260,57 @@ function getCharacteristic(req, res) {
       GROUP BY song.song_title;
     `;
   }
+  else if (inputValue == 'Happy') {
+    query = `
+    SELECT DISTINCT song.song_title, played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    JOIN played_by ON played_by.song_id = m.Song_id
+    WHERE m.explicit = "No" AND m.popularity > 70 AND m.musical_key ="A" AND m.mode = "Major" AND song.release_year > 2015
+    GROUP BY song.song_title
+    LIMIT 20;
+    `;
+  }
+  else if (inputValue == 'From the Stage') {
+    query = `
+    SELECT DISTINCT song.song_title, played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    JOIN played_by ON played_by.song_id = m.Song_id
+    WHERE m.popularity > 70 AND m.liveness > .7 AND song.song_title NOT LIKE "%Christmas%"
+    GROUP BY song.song_title
+    LIMIT 20;
+    `;
+  }
+  else if (inputValue == 'Spoken Word') {
+    query = `
+    SELECT DISTINCT song.song_title, played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    JOIN played_by ON played_by.song_id = m.Song_id
+    WHERE m.popularity > 50 AND m.speechiness > .7
+    GROUP BY song.song_title
+    LIMIT 20;
+    `;
+  }
+  else if (inputValue == 'Anxious') {
+    query = `
+    SELECT DISTINCT song.song_title, played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    JOIN played_by ON played_by.song_id = m.Song_id
+    WHERE m.popularity > 70 AND m.mode = "Minor" AND m.musical_key = "D#"
+    GROUP BY song.song_title
+    LIMIT 20;
+    `;
+  }
+  else if (inputValue == 'Work Out') {
+    query = `
+    SELECT DISTINCT song.song_title, 
+    played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    JOIN played_by ON played_by.song_id = m.Song_id
+    WHERE m.energy > .8 AND m.tempo > 90 AND m.popularity > 70 AND song.release_year > 2015 AND artist_name != "Pinkfong"
+    GROUP BY song.song_title
+    LIMIT 20;
+    `;
+  }
   else {
    query = `
     SELECT COLUMN_NAME 

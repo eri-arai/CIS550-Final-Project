@@ -13,9 +13,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 /* ------------------- Route handler registration ----------------- */
 /* ---------------------------------------------------------------- */
 
-
-
-
 app.get('/billboards', routes.getAllBillboards);
 app.get('/billboards/:week', routes.getBillboardChartByWeek);
 app.get('/billboardsy/', routes.getBillboardChartYear);
@@ -29,8 +26,8 @@ app.get('/songs/:name', routes.getSongsByTitle);
 app.get('/artists', routes.getAllArtists);
 app.get('/artists/:name', routes.getArtistByName);
 
-app.get('/characteristics', routes.getAllCharacteristics);
-app.get('/characteristics/:characteristic', routes.getCharacteristic);
+app.get('/playlist', routes.getAllCharacteristics);
+app.get('/playlist/:characteristic', routes.getCharacteristic);
 
 
 app.listen(8081, () => {

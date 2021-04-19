@@ -7,7 +7,7 @@ import {
 import Billboards from './Billboards';
 import Songs from './Songs';
 import Artists from './Artists';
-import Characteristics from './Characteristics';
+import Playlist from './Playlist';
 
 
 
@@ -49,9 +49,9 @@ export default class App extends React.Component {
 						/>
 						<Route
 							exact
-							path="/characteristics"
+							path="/playlist"
 							render={() => (
-								<Characteristics />
+								<Playlist/>
 							)}
 						/>
 						
