@@ -9,8 +9,14 @@
   flex-flow: row nowrap;
   align-items: center;
   height: 40px;
+  padding: 0 10px;
+
 }
 
 .artistResults .song, .artistResults .week_id, .artistResults .peak_position, .artistResults .weeks_on_chart, .headers .header {
+  display: flex;
   flex: 1 0 25%;
+  padding: 0 10px;
+  margin: 5px;
+
 }

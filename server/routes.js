@@ -160,19 +160,81 @@ function getAllArtists(req, res) {
 function getArtistByName(req, res) {
   var inputName = req.params.name;
   console.log(inputName);
+  // var query = `
+  //   SELECT *
+  //   FROM artist a
+  //   WHERE a.artist_name LIKE '%${inputName}%'
+  //   ORDER BY LENGTH(a.artist_name), a.artist_name;
+  // `;
   var query = `
-    SELECT *
-    FROM artist a
-    WHERE a.artist_name LIKE '%${inputName}%'
-    ORDER BY LENGTH(a.artist_name), a.artist_name;
+  SELECT a.artist_name, a.genre, COUNT(*) AS songs_in_database, AVG(acousticness) AS acousticness, AVG(danceability) AS danceability, 
+  AVG(duration_ms) AS duration_ms, AVG(energy) AS energy, AVG(instrumentalness) AS instrumentalness, 
+  AVG(liveness) AS liveness, AVG(loudness) AS loudness, AVG(popularity) AS popularity, AVG(speechiness) AS speechiness,
+  AVG(tempo) AS tempo, AVG(valence) AS valence, MIN(NULLIF(s.peak_position, 0)) AS peak_position, MAX(s.weeks_on_chart) AS weeks_on_chart
+   FROM artist a
+   JOIN played_by pb ON a.artist_name = pb.artist_name 
+   JOIN song s ON pb.song_id = s.song_id
+   JOIN musical_characteristics mc ON s.song_id = mc.song_id 
+   WHERE a.artist_name LIKE '%${inputName}%'
+   GROUP BY a.artist_name 
+   ORDER BY songs_in_database DESC
+  ;
   `;
   connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
     else {
+      // console.log(rows);
+      console.log(rows.length);
+      // console.log(JSON.stringify(rows))
+      // console.log(JSON.parse(JSON.stringify(rows)))
+
+
       res.json(rows);
+
+      for(i = 0; i < rows.length; i++){
+        
+        console.log("Here comes row ", i);
+
+        console.log(rows[i].artist_name);
+        artistName = rows[i].artist_name
+
+        getArtistTopSongs(artistName, function(rows2){
+          // if (err2) console.log("err2", err2);
+          // else{
+            console.log(rows2)
+
+          // }
+
+        });
+      }
     }
   });
 };
+
+function getArtistTopSongs(inputName, callback) {
+  // var inputName = req.params.name;
+  console.log("in getArtistTopSongs ", inputName);
+  var query = `
+  SELECT a.artist_name, s.song_title, s.weeks_on_chart, s.peak_position, mc.popularity 
+    FROM artist a
+    JOIN played_by pb ON a.artist_name = pb.artist_name 
+    JOIN song s ON pb.song_id = s.song_id
+    JOIN musical_characteristics mc ON s.song_id = mc.song_id 
+    WHERE a.artist_name = '${inputName}'
+    ORDER BY s.weeks_on_chart DESC, NULLIF(s.peak_position, 0), mc.popularity DESC
+    LIMIT 10
+   ;
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      // console.log(rows)
+      callback(rows);
+    }
+  });
+};
+
+
 
 // Get all characteristics
 function getAllCharacteristics(req, res) {
@@ -296,7 +358,7 @@ function getCharacteristic(req, res) {
     FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.popularity > 70 AND m.mode = "Minor" AND m.musical_key = "D#"
-    GROUP BY song.song_title
+    GROUP BY song.song_id
     LIMIT 20;
     `;
   }
@@ -311,6 +373,18 @@ function getCharacteristic(req, res) {
     LIMIT 20;
     `;
   }
+  // else if (inputValue == 'Work Out') {
+  //   query = `
+  //   SELECT song.song_title, 
+  //   played_by.artist_name AS artist_name
+  //   FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
+  //   JOIN played_by ON played_by.song_id = m.Song_id
+  //   WHERE m.energy > .8 AND m.tempo > 90 AND m.popularity > 70 AND song.release_year > 2015 AND artist_name != "Pinkfong"
+  //   GROUP BY song.song_id
+  //   LIMIT 20;
+  //   `;
+  // }
+
   else {
    query = `
     SELECT COLUMN_NAME 

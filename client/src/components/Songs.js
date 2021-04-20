@@ -41,7 +41,12 @@ export default class Songs extends React.Component {
 			let songsDivs = songsList.map((song, i) => 
 				// <RecommendationsRow key={recommendation.id} song={recommendation} />
 				<div id="results" key={i} className="results-container">
-					<SongsRow song_title={song.song_title} artist_name={song.artist_name} acousticness={song.acousticness} danceability={song.danceability}/>
+					{/* <SongsRow song_title={song.song_title} artist_name={song.artist_name} acousticness={song.acousticness} danceability={song.danceability}/> */}
+					<SongsRow song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
+					release_date={song.release_date} release_year={song.release_year} acousticness={song.acousticness} danceability={song.danceability} 
+					duration_ms={song.duration_ms} energy={song.energy} explicit={song.explicit} instrumentalness={song.instrumentalness} musical_key={song.musical_key}
+					liveness={song.liveness} loudness={song.loudness} mode={song.mode} popularity={song.popularity} speechiness={song.speechiness} 
+					tempo={song.tempo} valence={song.valence} genre={song.genre}/>
 				</div>
 				
 			);
@@ -67,19 +72,22 @@ export default class Songs extends React.Component {
 			    			<input type='text' placeholder="Enter Song Name" value={this.state.songName} onChange={this.handleSongNameChange} id="songName" className="Song-input"/>
 			    			<button id="submitSongBtn" className="submit-btn" onClick={this.submitSong}>Submit</button>
 			    		</div>
-			    		<div className="header-container">
-			    			{/* <div className="h6">You may like ...</div> */}
-			    			<div className="headers">
-			    				<div className="header"><strong>Song Title</strong></div>
-			    				<div className="header"><strong>Artist Name</strong></div>
-					            <div className="header"><strong>Acousticness</strong></div>
-					            <div className="header"><strong>Danceability</strong></div>
-			    			</div>
-			    		</div>
-			    		<div className="results-container" id="results">
-			    			{this.state.recSongs}
-			    		</div>
 			    	</div>
+
+					<div className="jumbotron">
+						<div className="song-container">
+							<div className="song">
+								<div className="header"><strong>Song Title</strong></div>
+								<div className="header"><strong>Artist Name</strong></div>
+								{/* <div className="header"><strong>Genre</strong></div> */}
+								{/* <div className="header"><strong>Peak Position</strong></div>
+								<div className="header"><strong>Weeks On Chart</strong></div> */}
+							</div>
+							<div className="song-container" id="results">
+								{this.state.recSongs}
+							</div>
+						</div>
+			      	</div>
 			    </div>
 		    </div>
 		);

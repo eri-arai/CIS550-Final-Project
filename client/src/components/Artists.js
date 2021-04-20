@@ -42,7 +42,12 @@ export default class Artists extends React.Component {
 			let artistsDivs = artistsList.map((artist, i) => 
 				// <RecommendationsRow key={recommendation.id} artist={recommendation} />
 				<div id="results" key={i} className="results-container">
-					<ArtistsRow artist_name={artist.artist_name}/>
+					{/* <ArtistsRow artist_name={artist.artist_name}/> */}
+					<ArtistsRow song_title={artist.song_title} artist_name={artist.artist_name} week_position={artist.week_position} peak_position={artist.peak_position} weeks_on_chart={artist.weeks_on_chart}
+					release_date={artist.release_date} release_year={artist.release_year} acousticness={artist.acousticness} danceability={artist.danceability} 
+					duration_ms={artist.duration_ms} energy={artist.energy} explicit={artist.explicit} instrumentalness={artist.instrumentalness} musical_key={artist.musical_key}
+					liveness={artist.liveness} loudness={artist.loudness} mode={artist.mode} popularity={artist.popularity} speechiness={artist.speechiness} 
+					tempo={artist.tempo} valence={artist.valence} genre={artist.genre} songs_in_database={artist.songs_in_database}/>
 				</div>
 				
 			);
@@ -79,6 +84,22 @@ export default class Artists extends React.Component {
 			    			{this.state.recArtists}
 			    		</div>
 			    	</div>
+
+					<div className="jumbotron">
+						<div className="header-container">
+							<div className="headers">
+								<div className="header"><strong>Artist Name</strong></div>
+								<div className="header"><strong>Genre</strong></div>
+								<div className="header"><strong>Songs in Database</strong></div>
+								{/* <div className="header"><strong>Peak Position</strong></div>
+								<div className="header"><strong>Weeks On Chart</strong></div> */}
+							</div>
+							<div className="artist-container" id="results">
+								{this.state.recArtists}
+							</div>
+						</div>
+			     	</div>
+
 			    </div>
 		    </div>
 		);
