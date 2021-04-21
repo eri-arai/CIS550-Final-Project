@@ -236,24 +236,13 @@ export default class Billboards extends React.Component {
 			        </div>
 			      </div>
 
-					{/* test */}
-				  {/* <table className= 'table-container'>
-					  <tr>
-						<th>Week Position</th>
-						<th>Song Title</th>
-						<th>Artist Name</th>
-					  </tr>
-					  {this.state.songsTest}
-			  	  </table> */}
-
+				
 			      <div className="jumbotron">
 			        <div className="song-container">
 			          <div className="song">
 			            <div className="header"><strong>Week Position</strong></div>
 			            <div className="header"><strong>Song Title</strong></div>
 						<div className="header"><strong>Artist Name</strong></div>
-						{/* <div className="header"><strong>Peak Position</strong></div>
-						<div className="header"><strong>Weeks On Chart</strong></div> */}
 			          </div>
 			          <div className="song-container" id="results">
 			            {this.state.songs}

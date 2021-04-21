@@ -22,7 +22,7 @@ main { margin: auto; max-width: 960px; }
   display: flex;
   flex-flow: column wrap;
   margin-top: 50px;
-  background-color:rosybrown;
+  /* background-color:rosybrown; */
 }
 
 .song-container .song, .song-container .songResults {
@@ -39,7 +39,7 @@ main { margin: auto; max-width: 960px; }
   /* background-color: white; */
 }
 
-.song .header, .songResults .week_position, .songResults .song_title, .songResults .artist_name, .songResults .peak_position, .songResults .weeks_on_chart, .songResults .data {
+.song .header, .songResults .song_title, .songResults .artist_name, .songResults .peak_position, .songResults .weeks_on_chart, .songResults .data {
   display: flex;
   flex: 1 0 25%;
   padding: 0 10px;
@@ -48,13 +48,20 @@ main { margin: auto; max-width: 960px; }
 
 }
 
+.songResults .week_position{
+  display: flex;
+  flex: 1 0 25%;
+  padding: 0 10px;
+  margin: 5px;
+  /* text-align: center; */
+}
+
 /* just installed */
 .table-container {
   margin: 10px;
   padding: 0;
   border: 1px solid #e5e5e5;
   border-radius: 5px;
-  /* background-color: white; */
   width: 100%;
 }
 
@@ -67,7 +74,6 @@ tr.expandable > td {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  /* flex: 1 0 25%; */
 
   
 

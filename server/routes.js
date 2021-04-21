@@ -329,7 +329,7 @@ function getCharacteristic(req, res) {
   console.log(inputValue);
   if (inputValue == 'Uplifting'){
   query = `
-    SELECT s.song_title, pb.artist_name
+    SELECT s.song_title, pb.artist_name, s.spotify_id 
     FROM musical_characteristics mc 
       JOIN song s ON mc.song_id = s.song_id 
       JOIN played_by pb ON s.song_id = pb.song_id
@@ -343,7 +343,7 @@ function getCharacteristic(req, res) {
   } else if (inputValue == 'Calming'){
   query = `
     SELECT song.song_title, 
-    played_by.artist_name AS artist_name
+    played_by.artist_name AS artist_name, song.spotify_id 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.loudness < .7 AND m.tempo < 75 AND m.acousticness > .3 
@@ -356,7 +356,7 @@ function getCharacteristic(req, res) {
   } else if (inputValue == 'Energetic'){
   query = `
     SELECT song.song_title, 
-    played_by.artist_name AS artist_name
+    played_by.artist_name AS artist_name, song.spotify_id 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.energy > .7 AND m.tempo > 60 AND m.popularity > 70 AND song.release_year > 2015
@@ -367,7 +367,7 @@ function getCharacteristic(req, res) {
   } else if (inputValue == 'Gloomy') {
     query = `
     SELECT song.song_title, 
-    played_by.artist_name AS artist_name
+    played_by.artist_name AS artist_name, song.spotify_id 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.energy < .6 AND m.tempo < 60 AND m.danceability < .6 AND m.popularity > 70 AND song.release_year > 2015
@@ -379,7 +379,7 @@ function getCharacteristic(req, res) {
   else if (inputValue == 'Acoustic') {
     query = `
     SELECT song.song_title, 
-    played_by.artist_name AS artist_name
+    played_by.artist_name AS artist_name, song.spotify_id 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.acousticness > .5 AND m.popularity > 70 AND song.release_year > 2015
@@ -391,7 +391,7 @@ function getCharacteristic(req, res) {
   else if (inputValue == 'Dancing') {
     query = `
       SELECT song.song_title, 
-      played_by.artist_name AS artist_name
+      played_by.artist_name AS artist_name, song.spotify_id 
       FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
       JOIN played_by ON played_by.song_id = m.Song_id
       WHERE m.energy > .7 AND m.tempo > 60 AND m.danceability > .6 AND m.popularity > 70 AND song.release_year > 2015
@@ -402,7 +402,7 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Happy') {
     query = `
-    SELECT song.song_title, played_by.artist_name AS artist_name
+    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.explicit = "No" AND m.popularity > 70 AND m.musical_key ="A" AND m.mode = "Major" AND song.release_year > 2015
@@ -413,7 +413,7 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'From the Stage') {
     query = `
-    SELECT song.song_title, played_by.artist_name AS artist_name
+    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.popularity > 70 AND m.liveness > .7 AND song.song_title NOT LIKE "%Christmas%"
@@ -424,7 +424,7 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Spoken Word') {
     query = `
-    SELECT song.song_title, played_by.artist_name AS artist_name
+    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.popularity > 50 AND m.speechiness > .7
@@ -435,7 +435,7 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Anxious') {
     query = `
-    SELECT song.song_title, played_by.artist_name AS artist_name
+    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.popularity > 70 AND m.mode = "Minor" AND m.musical_key = "D#"
@@ -447,7 +447,7 @@ function getCharacteristic(req, res) {
   else if (inputValue == 'Work Out') {
     query = `
     SELECT song.song_title, 
-    played_by.artist_name AS artist_name
+    played_by.artist_name AS artist_name, song.spotify_id 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.energy > .8 AND m.tempo > 90 AND m.popularity > 70 AND song.release_year > 2015 AND artist_name != "Pinkfong"
@@ -472,6 +472,207 @@ connection.query(query, function(err, rows, fields) {
 };
 
 
+// Advanced search
+function advancedSearch(req, res) {
+  var query = '';
+  var whereStatement = '';
+  
+  var aco = req.params.aco;
+  var dan = req.params.dan;
+  var dur = req.params.dur;
+  var ene = req.params.ene;
+  var exp = req.params.exp;
+  var ins = req.params.ins;
+  var mus = req.params.mus;
+  var liv = req.params.liv;
+  var lou = req.params.lou;
+  var mod = req.params.mod;
+  var pop = req.params.pop;
+  var spe = req.params.spe;
+  var tem = req.params.tem;
+  var val = req.params.val;
+  var term = 'WHERE ';
+
+  console.log(aco, dan, dur, ene, exp)
+
+  if (aco == 1){
+    whereStatement = whereStatement.concat(term, 'mc.acousticness > 0.5');
+    term = ' AND ';
+  } else if (aco == 2){
+    whereStatement = whereStatement.concat(term, 'mc.acousticness < 0.5');
+    term = ' AND ';
+  }
+
+  if (dan == 1){
+    whereStatement = whereStatement.concat(term, 'mc.danceability > 0.5');
+    term = ' AND ';
+  } else if (dan == 2){
+    whereStatement = whereStatement.concat(term, 'mc.danceability < 0.5');
+    term = ' AND ';
+  }
+
+  if (dur == 1){
+    whereStatement = whereStatement.concat(term, 'mc.duration_ms > 200000');
+    term = ' AND ';
+  } else if (dur == 2){
+    whereStatement = whereStatement.concat(term, 'mc.duration_ms < 200000');
+    term = ' AND ';
+  }
+
+  if (ene == 1){
+    whereStatement = whereStatement.concat(term, 'mc.energy > 0.5');
+    term = ' AND ';
+  } else if (ene == 2){
+    whereStatement = whereStatement.concat(term, 'mc.energy < 0.5');
+    term = ' AND ';
+  }
+
+  if (exp == 1){
+    whereStatement = whereStatement.concat(term, 'mc.explicit = \"No\"');
+    term = ' AND ';
+  } else if (exp == 2){
+    whereStatement = whereStatement.concat(term, 'mc.explicit = \"Yes\"');
+    term = ' AND ';
+  }
+
+  if (ins == 1){
+    whereStatement = whereStatement.concat(term, 'mc.instrumentalness > 0.001');
+    term = ' AND ';
+  } else if (ins == 2){
+    whereStatement = whereStatement.concat(term, 'mc.instrumentalness < 0.001');
+    term = ' AND ';
+  }
+
+
+  var musical_key = '';
+
+  // console.log("mus = ", mus)
+  if (mus < 12) {
+    switch(mus){
+      case '0':
+        musical_key = '\'C\''
+        break;
+      case '1':
+        musical_key = '\'C#\''
+        break;
+      case '2':
+        musical_key = '\'D\''
+        break;
+      case '3':
+        musical_key = '\'D#\''
+        break;
+      case '4':
+        musical_key = '\'E\''
+        break;
+      case '5':
+        musical_key = '\'F\''
+        break;
+      case '6':
+        musical_key = '\'F#\''
+        break;
+      case '7':
+        musical_key = '\'G\''
+        break;
+      case '8':
+        musical_key = '\'G#\''
+        break;
+      case '9':
+        musical_key = '\'A\''
+        break;
+      case '10':
+        musical_key = '\'A#\''
+        break;
+      case '11':
+        musical_key = '\'B\''
+        break;
+      default:
+        break;
+    }
+    // console.log("musical_key = ", musical_key)
+    whereStatement = whereStatement.concat(term, 'mc.musical_key = ', musical_key);
+    term = ' AND ';
+  }
+
+  if (liv == 1){
+    whereStatement = whereStatement.concat(term, 'mc.liveness > 0.2');
+    term = ' AND ';
+  } else if (liv == 2){
+    whereStatement = whereStatement.concat(term, 'mc.liveness < 0.2');
+    term = ' AND ';
+  }
+
+  if (lou == 1){
+    whereStatement = whereStatement.concat(term, 'mc.loudness > -10');
+    term = ' AND ';
+  } else if (lou == 2){
+    whereStatement = whereStatement.concat(term, 'mc.loudness < -10');
+    term = ' AND ';
+  }
+
+  if (mod == 1){
+    whereStatement = whereStatement.concat(term, 'mc.mode = \"Minor\"');
+    term = ' AND ';
+  } else if (mod == 2){
+    whereStatement = whereStatement.concat(term, 'mc.mode = \"Major\"');
+    term = ' AND ';
+  }
+
+  if (pop == 1){
+    whereStatement = whereStatement.concat(term, 'mc.popularity > 25');
+    term = ' AND ';
+  } else if (pop == 2){
+    whereStatement = whereStatement.concat(term, 'mc.popularity < 25');
+    term = ' AND ';
+  }
+
+  if (spe == 1){
+    whereStatement = whereStatement.concat(term, 'mc.speechiness > 0.1');
+    term = ' AND ';
+  } else if (spe == 2){
+    whereStatement = whereStatement.concat(term, 'mc.speechiness < 0.1');
+    term = ' AND ';
+  }
+
+  if (tem == 1){
+    whereStatement = whereStatement.concat(term, 'mc.tempo > 115');
+    term = ' AND ';
+  } else if (tem == 2){
+    whereStatement = whereStatement.concat(term, 'mc.tempo < 115');
+    term = ' AND ';
+  }
+
+  if (val == 1){
+    whereStatement = whereStatement.concat(term, 'mc.valence > 0.5');
+    term = ' AND ';
+  } else if (val == 2){
+    whereStatement = whereStatement.concat(term, 'mc.valence < 0.5');
+    term = ' AND ';
+  }
+
+  console.log("whereStatement: ", whereStatement);
+
+  query = `
+    SELECT s.song_title, pb.artist_name AS artist_name, s.spotify_id 
+    FROM song s
+    JOIN played_by pb ON s.song_id = pb.song_id
+    JOIN musical_characteristics mc ON s.song_id = mc.song_id
+    ${whereStatement}
+    GROUP BY s.spotify_id
+    ORDER BY mc.popularity DESC
+    LIMIT 25
+    ;
+  `;
+
+  console.log("query: ", query);
+
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      // console.log("rows: ", rows);
+      res.json(rows);
+    }
+  });
+};
   
   
 // The exported functions, which can be accessed in index.js.
@@ -491,6 +692,7 @@ module.exports = {
   getGenreByName: getGenreByName,
   getGenreTopSongsByName: getGenreTopSongsByName,
   getAllCharacteristics: getAllCharacteristics,
-  getCharacteristic: getCharacteristic
+  getCharacteristic: getCharacteristic,
+  advancedSearch: advancedSearch
 
 };

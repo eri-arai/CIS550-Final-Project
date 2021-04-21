@@ -74,7 +74,7 @@ export default class Playlist extends React.Component {
 			let songDivs = songList.map((song, i) => 
 				// <RecommendationsRow key={recommendation.id} movie={recommendation} />
 				<div id="results" key={i} className="results-container">
-					<PlaylistRow song_title={song.song_title} artist_name={song.artist_name}/>
+					<PlaylistRow song_title={song.song_title} artist_name={song.artist_name} spotify_id={song.spotify_id}/>
 				</div>
 				
 			);
@@ -110,6 +110,7 @@ export default class Playlist extends React.Component {
 			          <div className="song">
 			            <div className="header"><strong>Song Title</strong></div>
 						<div className="header"><strong>Artist Name</strong></div>
+						<div className="header"><strong>Spotify Link</strong></div>
 			          </div>
 			          <div className="song-container" id="results">
 			            {this.state.songs}

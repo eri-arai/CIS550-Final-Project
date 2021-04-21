@@ -114,7 +114,7 @@ export default class BillboardRow extends React.Component {
 				
 				<tr key="main" onClick={this.toggleExpander}>
 					<div className="songResults">
-						<div className="data">{this.props.week_position}</div>
+						<div className="week_position">{this.props.week_position}</div>
 						<div className="data">{this.props.song_title}</div>
 						<div className="data">{this.props.artist_name}</div>
 					</div>
@@ -125,8 +125,8 @@ export default class BillboardRow extends React.Component {
 					  <div ref="expanderBody" className="inner uk-grid">
 						<div className="uk-width-3-4">
 						  <div className="songResults">
-							<div className="peak_position">Peak Position: {this.props.peak_position}</div>
-							<div className="weeks_on_chart">Weeks On Chart: {this.props.weeks_on_chart}</div>
+							<div className="data">Peak Position: {this.props.peak_position}</div>
+							<div className="data">Weeks On Chart: {this.props.weeks_on_chart}</div>
 							<div className="data">Release Date: {release_date}</div>
 							<div className="data">Release Year: {release_year}</div>
 						  </div>
@@ -167,7 +167,7 @@ export default class BillboardRow extends React.Component {
 		return [
 			<tr key="main" onClick={this.toggleExpander}>
 			  <div className="songResults">
-				<div className="data">{this.props.week_position}</div>
+				<div className="week_position">{this.props.week_position}</div>
 				<div className="data">{this.props.song_title}</div>
 				<div className="data">{this.props.artist_name}</div>
 			  </div>	
@@ -179,8 +179,8 @@ export default class BillboardRow extends React.Component {
 				  <div ref="expanderBody" className="inner uk-grid">
 					<div className="uk-width-3-4">
 					  <div className="songResults">
-						<div className="peak_position">Peak Position: {this.props.peak_position}</div>
-						<div className="weeks_on_chart">Weeks On Chart: {this.props.weeks_on_chart}</div>
+						<div className="data">Peak Position: {this.props.peak_position}</div>
+						<div className="data">Weeks On Chart: {this.props.weeks_on_chart}</div>
 						<div className="data">Release Date: {release_date}</div>
 						<div className="data">Release Year: {release_year}</div>
 					  </div>

@@ -36,6 +36,9 @@ app.get('/playlist', routes.getAllCharacteristics);
 app.get('/playlist/:characteristic', routes.getCharacteristic);
 
 
+app.get('/advanced/:aco/:dan/:dur/:ene/:exp/:ins/:liv/:lou/:mod/:mus/:pop/:spe/:tem/:val', routes.advancedSearch);
+
+
 app.listen(8081, () => {
 	console.log(`Server listening on PORT 8081`);
 });

@@ -9,6 +9,7 @@ import Songs from './Songs';
 import Artists from './Artists';
 import Genres from './Genres';
 import Playlist from './Playlist';
+import Advanced from './Advanced';
 
 
 
@@ -60,6 +61,14 @@ export default class App extends React.Component {
 							path="/playlist"
 							render={() => (
 								<Playlist/>
+							)}
+						/>
+
+						<Route
+							exact
+							path="/advanced"
+							render={() => (
+								<Advanced/>
 							)}
 						/>
 						
