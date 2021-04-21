@@ -349,7 +349,9 @@ function getCharacteristic(req, res) {
     WHERE m.loudness < .7 AND m.tempo < 75 AND m.acousticness > .3 
     AND m.liveness < .7 AND m.explicit = 'No' AND m.popularity > 70
     AND song.release_year > 2015
-    GROUP BY song.song_title;
+    GROUP BY song.song_title
+    ORDER BY m.popularity DESC
+    LIMIT 20;
   `;
   } else if (inputValue == 'Energetic'){
   query = `
@@ -358,7 +360,9 @@ function getCharacteristic(req, res) {
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.energy > .7 AND m.tempo > 60 AND m.popularity > 70 AND song.release_year > 2015
-    GROUP BY song.song_title;
+    GROUP BY song.song_title
+    ORDER BY m.popularity DESC
+    LIMIT 20;
   `;
   } else if (inputValue == 'Gloomy') {
     query = `
@@ -367,7 +371,9 @@ function getCharacteristic(req, res) {
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.energy < .6 AND m.tempo < 60 AND m.danceability < .6 AND m.popularity > 70 AND song.release_year > 2015
-    GROUP BY song.song_title;
+    GROUP BY song.song_title
+    ORDER BY m.popularity DESC
+    LIMIT 20;
   `;
   }
   else if (inputValue == 'Acoustic') {
@@ -377,7 +383,9 @@ function getCharacteristic(req, res) {
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.acousticness > .5 AND m.popularity > 70 AND song.release_year > 2015
-    GROUP BY song.song_title;
+    GROUP BY song.song_title
+    ORDER BY m.popularity DESC
+    LIMIT 20;
   `;
   }
   else if (inputValue == 'Dancing') {
@@ -387,7 +395,9 @@ function getCharacteristic(req, res) {
       FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
       JOIN played_by ON played_by.song_id = m.Song_id
       WHERE m.energy > .7 AND m.tempo > 60 AND m.danceability > .6 AND m.popularity > 70 AND song.release_year > 2015
-      GROUP BY song.song_title;
+      GROUP BY song.song_title
+      ORDER BY m.popularity DESC
+      LIMIT 20;
     `;
   }
   else if (inputValue == 'Happy') {
@@ -397,6 +407,7 @@ function getCharacteristic(req, res) {
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.explicit = "No" AND m.popularity > 70 AND m.musical_key ="A" AND m.mode = "Major" AND song.release_year > 2015
     GROUP BY song.song_title
+    ORDER BY m.popularity DESC
     LIMIT 20;
     `;
   }
@@ -407,6 +418,7 @@ function getCharacteristic(req, res) {
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.popularity > 70 AND m.liveness > .7 AND song.song_title NOT LIKE "%Christmas%"
     GROUP BY song.song_title
+    ORDER BY m.popularity DESC
     LIMIT 20;
     `;
   }
@@ -417,6 +429,7 @@ function getCharacteristic(req, res) {
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.popularity > 50 AND m.speechiness > .7
     GROUP BY song.song_title
+    ORDER BY m.popularity DESC
     LIMIT 20;
     `;
   }
@@ -427,6 +440,7 @@ function getCharacteristic(req, res) {
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.popularity > 70 AND m.mode = "Minor" AND m.musical_key = "D#"
     GROUP BY song.song_id
+    ORDER BY m.popularity DESC
     LIMIT 20;
     `;
   }
@@ -438,21 +452,10 @@ function getCharacteristic(req, res) {
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.energy > .8 AND m.tempo > 90 AND m.popularity > 70 AND song.release_year > 2015 AND artist_name != "Pinkfong"
     GROUP BY song.song_title
+    ORDER BY m.popularity DESC
     LIMIT 20;
     `;
   }
-  // else if (inputValue == 'Work Out') {
-  //   query = `
-  //   SELECT song.song_title, 
-  //   played_by.artist_name AS artist_name
-  //   FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
-  //   JOIN played_by ON played_by.song_id = m.Song_id
-  //   WHERE m.energy > .8 AND m.tempo > 90 AND m.popularity > 70 AND song.release_year > 2015 AND artist_name != "Pinkfong"
-  //   GROUP BY song.song_id
-  //   LIMIT 20;
-  //   `;
-  // }
-
   else {
    query = `
     SELECT COLUMN_NAME 
