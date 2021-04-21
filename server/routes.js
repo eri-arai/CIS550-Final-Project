@@ -491,6 +491,7 @@ function advancedSearch(req, res) {
   var spe = req.params.spe;
   var tem = req.params.tem;
   var val = req.params.val;
+  var pea = req.params.pea;
   var term = 'WHERE ';
 
   console.log(aco, dan, dur, ene, exp)
@@ -646,6 +647,14 @@ function advancedSearch(req, res) {
     term = ' AND ';
   } else if (val == 2){
     whereStatement = whereStatement.concat(term, 'mc.valence < 0.5');
+    term = ' AND ';
+  }
+
+  if (pea == 1){
+    whereStatement = whereStatement.concat(term, 's.peak_position > 0');
+    term = ' AND ';
+  } else if (val == 2){
+    whereStatement = whereStatement.concat(term, 's.peak_position > 10 AND s.peak_position < 10');
     term = ' AND ';
   }
 

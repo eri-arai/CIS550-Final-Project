@@ -25,6 +25,8 @@ export default class Advanced extends React.Component {
 			selectedSpe: "",
 			selectedTem: "",
 			selectedVal: "",
+			selectedPea: "",
+
 
 			acos: [],
 			dans: [],
@@ -41,7 +43,8 @@ export default class Advanced extends React.Component {
 			pops: [], 
 			spes: [], 
 			tems: [], 
-			vals: [] 
+			vals: [],
+			peas: [] 
 
 		};
 
@@ -133,6 +136,7 @@ export default class Advanced extends React.Component {
 			spes: [<option value={'1'}>{'Above average speechiness'}</option>, <option value={'2'}>{'Below average speechiness'}</option>],
 			tems: [<option value={'1'}>{'Above average tempo'}</option>, <option value={'2'}>{'Below average tempo'}</option>],
 			vals: [<option value={'1'}>{'Above average valence'}</option>, <option value={'2'}>{'Below average valence'}</option>],
+			peas: [<option value={'1'}>{'Top 10'}</option>, <option value={'2'}>{'Top 100'}</option>],
 
 		  });
 
@@ -227,6 +231,11 @@ export default class Advanced extends React.Component {
 				selectedVal: value
 			});
 			this.selectedVal = value;
+		} else if (name == 'selectedPea'){
+			this.setState({
+				selectedPea: value
+			});
+			this.selectedPea = value;
 		}
 
 		console.log(name, value)
@@ -250,12 +259,14 @@ export default class Advanced extends React.Component {
 		if (this.selectedSpe === undefined) this.selectedSpe = 0;
 		if (this.selectedTem === undefined) this.selectedTem = 0;
 		if (this.selectedVal === undefined) this.selectedVal = 0;
+		if (this.selectedPea === undefined) this.selectedPea = 0;
+
 
 		
 		// var fixed = this.state.selectedAdvanced.replace(/\//g,"-")
 		var fixed = this.selectedAco + "/" + this.selectedDan + "/" + this.selectedDur + "/" + this.selectedEne + "/" + this.selectedExp
 		+ "/" + this.selectedIns + "/" + this.selectedLiv + "/" + this.selectedLou + "/" + this.selectedMod + "/" + this.selectedMus
-		+ "/" + this.selectedPop + "/" + this.selectedSpe + "/" + this.selectedTem + "/" + this.selectedVal
+		+ "/" + this.selectedPop + "/" + this.selectedSpe + "/" + this.selectedTem + "/" + this.selectedVal +"/" + this.selectedPea
 		
 		// /advanced/:aco/:dan/:dur/:ene/:exp/:ins/:liv/:lou/:mod/:mus/:pop/:spe/:tem/:val
 
@@ -356,6 +367,10 @@ export default class Advanced extends React.Component {
 						<select value={this.state.selectedVal} onChange={this.handleChange} name = 'selectedVal' className="dropdown" id="billboardsDropdown">
 			            	<option select value> -- Valence -- </option>
 			            	{this.state.vals}
+			            </select>
+						<select value={this.state.selectedPea} onChange={this.handleChange} name = 'selectedPea' className="dropdown" id="billboardsDropdown">
+			            	<option select value> -- Peak Billboard Position -- </option>
+			            	{this.state.peas}
 			            </select>
 			            <button className="submit-btn" id="advancedSubmitBtn" onClick={this.submitAdvanced}>Submit</button>
 			          </div>
