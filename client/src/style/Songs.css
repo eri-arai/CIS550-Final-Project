@@ -9,8 +9,14 @@
   flex-flow: row nowrap;
   align-items: center;
   height: 40px;
+  padding: 0 10px;
+
 }
 
 .songResults .name, .songResults .artists, .songResults .acousticness, .songResults .danceability, .headers .header {
+  /* flex: 1 0 25%; */
+  display: flex;
   flex: 1 0 25%;
+  padding: 0 10px;
+  margin: 10px;
 }

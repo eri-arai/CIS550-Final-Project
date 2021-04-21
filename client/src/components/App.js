@@ -7,6 +7,7 @@ import {
 import Billboards from './Billboards';
 import Songs from './Songs';
 import Artists from './Artists';
+import Genres from './Genres';
 import Playlist from './Playlist';
 
 
@@ -45,6 +46,13 @@ export default class App extends React.Component {
 							path="/artists"
 							render={() => (
 								<Artists />
+							)}
+						/>
+						<Route
+							exact
+							path="/genres"
+							render={() => (
+								<Genres />
 							)}
 						/>
 						<Route

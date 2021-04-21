@@ -3,26 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { slideDown, slideUp } from './Collapse';
 
 
-// export default class SongsRow extends React.Component {
-// 	constructor(props) {
-// 		super(props);
-// 	}
-
-// 	render() {
-// 		return (
-// 			<div className="songResults">
-// 				{/* {this.props.movie.title} */}
-// 				<div className="song_title">{this.props.song_title}</div>
-// 				<div className="artist_name">{this.props.artist_name}</div>
-// 				<div className="acousticness">{this.props.acousticness}</div>
-// 				<div className="danceability">{this.props.danceability}</div>
-// 			</div>
-// 		);
-// 	}
-// }
-
-
-
 export default class SongsRow extends React.Component {
 	constructor(props) {
 		super(props);
@@ -129,6 +109,8 @@ export default class SongsRow extends React.Component {
 					musical_key = this.props.musical_key;
 					break;
 			}
+			var spotify_link = "https://open.spotify.com/track/" + this.props.spotify_id;
+
 			return [
 				
 				<tr key="main" onClick={this.toggleExpander}>
@@ -173,6 +155,7 @@ export default class SongsRow extends React.Component {
 							<div className="data">Speechiness: {this.props.speechiness}</div>
 							<div className="data">Tempo: {this.props.tempo}</div>
 							<div className="data">Valence: {this.props.valence}</div>
+							<div className="data"><a href={spotify_link} target="_blank">Find it on Spotify</a></div>
 						  </div>
 						</div>
 					  </div>

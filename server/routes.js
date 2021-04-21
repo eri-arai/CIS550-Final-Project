@@ -34,7 +34,7 @@ function getBillboardChartYear(req, res) {
   console.log("inputYear");
 
   var query = `
-    SELECT DISTINCT YEAR(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) AS year
+    SELECT DISTINCT(YEAR(STR_TO_DATE(wc.week_id, '%m/%d/%Y'))) AS year
     FROM weekly_chart wc
     ORDER BY YEAR(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) DESC;
   `;
@@ -46,12 +46,12 @@ function getBillboardChartYear(req, res) {
   });
 };
 
-// Get all billboard years for the dropdown options
+// Get all billboard months for the dropdown options
 function getBillboardChartMonth(req, res) {
   console.log("inputMonth");
 
   var query = `
-    SELECT DISTINCT MONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) AS month
+    SELECT DISTINCT(MONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y'))) AS month
     FROM weekly_chart wc
     ORDER BY MONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y'));
   `;
@@ -63,14 +63,14 @@ function getBillboardChartMonth(req, res) {
   });
 };
 
-// Get all billboard years for the dropdown options
+// Get all billboard days for the dropdown options
 function getBillboardChartDay(req, res) {
   var inputYear = req.params.year;
   var inputMonth = req.params.month;
   console.log("inputDay");
 
   var query = `
-    SELECT DISTINCT DAYOFMONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) AS day
+    SELECT DISTINCT(DAYOFMONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y'))) AS day
     FROM weekly_chart wc
     WHERE YEAR(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) =  '${inputYear}' AND MONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y')) = '${inputMonth}'
     ORDER BY DAYOFMONTH(STR_TO_DATE(wc.week_id, '%m/%d/%Y'));
@@ -125,13 +125,35 @@ function getAllSongs(req, res) {
 // Maybe change to LIKE instead of =
 function getSongsByTitle(req, res) {
   var inputName = req.params.name;
-  console.log(inputName);
+  console.log("exact ", inputName);
   var query = `
     SELECT *
     FROM song s JOIN played_by pb ON s.song_id = pb.song_id
     JOIN musical_characteristics mc ON s.song_id = mc.song_id
+    JOIN artist a ON a.artist_name = pb.artist_name
+    WHERE s.song_title LIKE '${inputName}%'
+    ORDER BY LENGTH(s.song_title), s.song_id
+    LIMIT 20;
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+};
+
+function getSongsByVagueTitle(req, res) {
+  var inputName = req.params.name;
+  console.log("vague ",  inputName);
+  var query = `
+    SELECT *
+    FROM song s JOIN played_by pb ON s.song_id = pb.song_id
+    JOIN musical_characteristics mc ON s.song_id = mc.song_id
+    JOIN artist a ON a.artist_name = pb.artist_name
     WHERE s.song_title LIKE '%${inputName}%'
-    ORDER BY LENGTH(s.song_title), s.song_id;
+    ORDER BY LENGTH(s.song_title), s.song_id
+    LIMIT 20;
   `;
   connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
@@ -155,6 +177,8 @@ function getAllArtists(req, res) {
   });
 };
 
+
+
 // Get artist by name
 // Should probably change to LIKE intead of =
 function getArtistByName(req, res) {
@@ -167,10 +191,10 @@ function getArtistByName(req, res) {
   //   ORDER BY LENGTH(a.artist_name), a.artist_name;
   // `;
   var query = `
-  SELECT a.artist_name, a.genre, COUNT(*) AS songs_in_database, AVG(acousticness) AS acousticness, AVG(danceability) AS danceability, 
-  AVG(duration_ms) AS duration_ms, AVG(energy) AS energy, AVG(instrumentalness) AS instrumentalness, 
-  AVG(liveness) AS liveness, AVG(loudness) AS loudness, AVG(popularity) AS popularity, AVG(speechiness) AS speechiness,
-  AVG(tempo) AS tempo, AVG(valence) AS valence, MIN(NULLIF(s.peak_position, 0)) AS peak_position, MAX(s.weeks_on_chart) AS weeks_on_chart
+  SELECT a.artist_name, a.genre, COUNT(*) AS songs_in_database, TRUNCATE(AVG(acousticness),4) AS acousticness, TRUNCATE(AVG(danceability),4) AS danceability, 
+  TRUNCATE(AVG(duration_ms),4) AS duration_ms, TRUNCATE(AVG(energy),4) AS energy, TRUNCATE(AVG(instrumentalness),4) AS instrumentalness, 
+  TRUNCATE(AVG(liveness),4) AS liveness, TRUNCATE(AVG(loudness),4) AS loudness, TRUNCATE(AVG(popularity),4) AS popularity, TRUNCATE(AVG(speechiness),4) AS speechiness,
+  TRUNCATE(AVG(tempo),4) AS tempo, TRUNCATE(AVG(valence),4) AS valence, MIN(NULLIF(s.peak_position, 0)) AS peak_position, MAX(s.weeks_on_chart) AS weeks_on_chart
    FROM artist a
    JOIN played_by pb ON a.artist_name = pb.artist_name 
    JOIN song s ON pb.song_id = s.song_id
@@ -183,36 +207,13 @@ function getArtistByName(req, res) {
   connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
     else {
-      // console.log(rows);
-      console.log(rows.length);
-      // console.log(JSON.stringify(rows))
-      // console.log(JSON.parse(JSON.stringify(rows)))
-
-
       res.json(rows);
-
-      for(i = 0; i < rows.length; i++){
-        
-        console.log("Here comes row ", i);
-
-        console.log(rows[i].artist_name);
-        artistName = rows[i].artist_name
-
-        getArtistTopSongs(artistName, function(rows2){
-          // if (err2) console.log("err2", err2);
-          // else{
-            console.log(rows2)
-
-          // }
-
-        });
-      }
     }
   });
 };
 
-function getArtistTopSongs(inputName, callback) {
-  // var inputName = req.params.name;
+function getArtistTopSongsByName(req, res) {
+  var inputName = req.params.name;
   console.log("in getArtistTopSongs ", inputName);
   var query = `
   SELECT a.artist_name, s.song_title, s.weeks_on_chart, s.peak_position, mc.popularity 
@@ -229,12 +230,78 @@ function getArtistTopSongs(inputName, callback) {
     if (err) console.log(err);
     else {
       // console.log(rows)
-      callback(rows);
+      res.json(rows);
     }
   });
 };
 
 
+// Get all genres
+function getAllGenres(req, res) {
+  // var inputGenre = req.params.genre;
+  // console.log("in getArtistTopSongs ", inputGenre);
+  var query = `
+  SELECT DISTINCT a.genre
+    FROM artist a
+   ;
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      // console.log(rows)
+      res.json(rows);
+    }
+  });
+};
+
+function getGenreByName(req, res) {
+  // console.log(req);
+  var inputGenre = req.params.genre;
+  console.log(inputGenre);
+  var query = `
+  SELECT a.artist_name, a.genre, COUNT(*) AS songs_in_database, TRUNCATE(AVG(acousticness),4) AS acousticness, TRUNCATE(AVG(danceability),4) AS danceability, 
+  TRUNCATE(AVG(duration_ms),4) AS duration_ms, TRUNCATE(AVG(energy),4) AS energy, TRUNCATE(AVG(instrumentalness),4) AS instrumentalness, 
+  TRUNCATE(AVG(liveness),4) AS liveness, TRUNCATE(AVG(loudness),4) AS loudness, TRUNCATE(AVG(popularity),4) AS popularity, TRUNCATE(AVG(speechiness),4) AS speechiness,
+  TRUNCATE(AVG(tempo),4) AS tempo, TRUNCATE(AVG(valence),4) AS valence, MIN(NULLIF(s.peak_position, 0)) AS peak_position, MAX(s.weeks_on_chart) AS weeks_on_chart
+   FROM artist a
+   JOIN played_by pb ON a.artist_name = pb.artist_name 
+   JOIN song s ON pb.song_id = s.song_id
+   JOIN musical_characteristics mc ON s.song_id = mc.song_id 
+   WHERE a.genre LIKE '${inputGenre}%'
+   GROUP BY a.genre 
+   ORDER BY songs_in_database DESC
+  ;
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+};
+
+function getGenreTopSongsByName(req, res) {
+  var inputGenre = req.params.genre;
+  console.log("in getGenreTopSongs ", inputGenre);
+  var query = `
+  SELECT a.artist_name, s.song_title, s.weeks_on_chart, s.peak_position, mc.popularity 
+    FROM artist a
+    JOIN played_by pb ON a.artist_name = pb.artist_name 
+    JOIN song s ON pb.song_id = s.song_id
+    JOIN musical_characteristics mc ON s.song_id = mc.song_id 
+    WHERE a.genre = '${inputGenre}'
+    ORDER BY s.weeks_on_chart DESC, NULLIF(s.peak_position, 0), mc.popularity DESC
+    LIMIT 25
+   ;
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      // console.log(rows)
+      res.json(rows);
+    }
+  });
+};
 
 // Get all characteristics
 function getAllCharacteristics(req, res) {
@@ -270,13 +337,14 @@ function getCharacteristic(req, res) {
       AND mc.tempo > 70 AND mc.acousticness > 0.5 
       AND mc.mode = 'Major' AND mc.explicit = 'No'
     ORDER BY mc.popularity DESC
+    LIMIT 20
     ;
   `;
   } else if (inputValue == 'Calming'){
   query = `
-    SELECT DISTINCT song.song_title, 
+    SELECT song.song_title, 
     played_by.artist_name AS artist_name
-    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.loudness < .7 AND m.tempo < 75 AND m.acousticness > .3 
     AND m.liveness < .7 AND m.explicit = 'No' AND m.popularity > 70
@@ -285,18 +353,18 @@ function getCharacteristic(req, res) {
   `;
   } else if (inputValue == 'Energetic'){
   query = `
-    SELECT DISTINCT song.song_title, 
+    SELECT song.song_title, 
     played_by.artist_name AS artist_name
-    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.energy > .7 AND m.tempo > 60 AND m.popularity > 70 AND song.release_year > 2015
     GROUP BY song.song_title;
   `;
   } else if (inputValue == 'Gloomy') {
     query = `
-    SELECT DISTINCT song.song_title, 
+    SELECT song.song_title, 
     played_by.artist_name AS artist_name
-    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.energy < .6 AND m.tempo < 60 AND m.danceability < .6 AND m.popularity > 70 AND song.release_year > 2015
     GROUP BY song.song_title;
@@ -304,9 +372,9 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Acoustic') {
     query = `
-    SELECT DISTINCT song.song_title, 
+    SELECT song.song_title, 
     played_by.artist_name AS artist_name
-    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.acousticness > .5 AND m.popularity > 70 AND song.release_year > 2015
     GROUP BY song.song_title;
@@ -314,9 +382,9 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Dancing') {
     query = `
-      SELECT DISTINCT song.song_title, 
+      SELECT song.song_title, 
       played_by.artist_name AS artist_name
-      FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+      FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
       JOIN played_by ON played_by.song_id = m.Song_id
       WHERE m.energy > .7 AND m.tempo > 60 AND m.danceability > .6 AND m.popularity > 70 AND song.release_year > 2015
       GROUP BY song.song_title;
@@ -324,8 +392,8 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Happy') {
     query = `
-    SELECT DISTINCT song.song_title, played_by.artist_name AS artist_name
-    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    SELECT song.song_title, played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.explicit = "No" AND m.popularity > 70 AND m.musical_key ="A" AND m.mode = "Major" AND song.release_year > 2015
     GROUP BY song.song_title
@@ -334,8 +402,8 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'From the Stage') {
     query = `
-    SELECT DISTINCT song.song_title, played_by.artist_name AS artist_name
-    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    SELECT song.song_title, played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.popularity > 70 AND m.liveness > .7 AND song.song_title NOT LIKE "%Christmas%"
     GROUP BY song.song_title
@@ -344,8 +412,8 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Spoken Word') {
     query = `
-    SELECT DISTINCT song.song_title, played_by.artist_name AS artist_name
-    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    SELECT song.song_title, played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.popularity > 50 AND m.speechiness > .7
     GROUP BY song.song_title
@@ -354,8 +422,8 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Anxious') {
     query = `
-    SELECT DISTINCT song.song_title, played_by.artist_name AS artist_name
-    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    SELECT song.song_title, played_by.artist_name AS artist_name
+    FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.popularity > 70 AND m.mode = "Minor" AND m.musical_key = "D#"
     GROUP BY song.song_id
@@ -364,9 +432,9 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Work Out') {
     query = `
-    SELECT DISTINCT song.song_title, 
+    SELECT song.song_title, 
     played_by.artist_name AS artist_name
-    FROM song JOIN musical_characteristics m ON m.Spotify_id = song.spotify_id
+    FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
     WHERE m.energy > .8 AND m.tempo > 90 AND m.popularity > 70 AND song.release_year > 2015 AND artist_name != "Pinkfong"
     GROUP BY song.song_title
@@ -412,8 +480,13 @@ module.exports = {
   getBillboardChartDay: getBillboardChartDay,
   getAllSongs: getAllSongs,
   getSongsByTitle: getSongsByTitle,
+  getSongsByVagueTitle:getSongsByVagueTitle,
   getAllArtists: getAllArtists,
   getArtistByName: getArtistByName,
+  getArtistTopSongsByName: getArtistTopSongsByName,
+  getAllGenres: getAllGenres,
+  getGenreByName: getGenreByName,
+  getGenreTopSongsByName: getGenreTopSongsByName,
   getAllCharacteristics: getAllCharacteristics,
   getCharacteristic: getCharacteristic
 

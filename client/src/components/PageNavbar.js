@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../style/Navbar.css';
 
 export default class PageNavbar extends React.Component {
 	constructor(props) {
@@ -12,7 +13,7 @@ export default class PageNavbar extends React.Component {
 
 	componentDidMount() {
 		// const pageList = ['dashboard', 'recommendations', 'bestgenres', 'billboards', 'songs', 'artists', 'characteristics'];
-		const pageList = ['billboards', 'songs', 'artists', 'playlist'];
+		const pageList = ['billboards', 'songs', 'artists', 'genres', 'playlist'];
 
 		let navbarDivs = pageList.map((page, i) => {
 			if (this.props.active === page) {
@@ -31,7 +32,8 @@ export default class PageNavbar extends React.Component {
 	render() {
 		return (
 			<div className="PageNavbar">
-				<nav className="navbar navbar-expand-lg navbar-light bg-light">
+				{/* <nav className="navbar navbar-expand-lg navbar-light bg-light"> */}
+				<nav className="navbar navbar-expand navbar-light bg-light">
 			      <span className="navbar-brand center">Spotify Project</span>
 			      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
 			        <div className="navbar-nav">

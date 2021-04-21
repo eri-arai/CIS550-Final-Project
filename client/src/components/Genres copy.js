@@ -25,9 +25,11 @@ export default class Artists extends React.Component {
 		});
 	}
 
+	/* ---- Q2 (Artists) ---- */
+	// Hint: Name of artist submitted is contained in `this.state.artistName`.
 	submitArtist() {
-		console.log("http://localhost:8081/artists/" + this.state.artistName);
-		fetch("http://localhost:8081/artists/" + this.state.artistName,
+		// console.log("HI");
+		fetch("http://localhost:8081/genres/" + this.state.artistName,
 		{
 			method: "GET"
 		}).then(res => {
@@ -38,7 +40,9 @@ export default class Artists extends React.Component {
 			console.log(artistsList); //displays your JSON object in the console
 
 			let artistsDivs = artistsList.map((artist, i) => 
+				// <RecommendationsRow key={recommendation.id} artist={recommendation} />
 				<div id="results" key={i} className="results-container">
+					{/* <ArtistsRow artist_name={artist.artist_name}/> */}
 					<ArtistsRow song_title={artist.song_title} artist_name={artist.artist_name} week_position={artist.week_position} peak_position={artist.peak_position} weeks_on_chart={artist.weeks_on_chart}
 					release_date={artist.release_date} release_year={artist.release_year} acousticness={artist.acousticness} danceability={artist.danceability} 
 					duration_ms={artist.duration_ms} energy={artist.energy} explicit={artist.explicit} instrumentalness={artist.instrumentalness} musical_key={artist.musical_key}

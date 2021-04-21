@@ -4,7 +4,7 @@
   /* margin-top: 10px; */
 }
 
-.header-container .headers, .results-container .artistResults {
+.header-container .headers, .results-container .genreResults {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -13,7 +13,7 @@
 
 }
 
-.artistResults .song, .artistResults .week_id, .artistResults .peak_position, .artistResults .weeks_on_chart, .headers .header {
+.genreResults .song, .genreResults .week_id, .genreResults .peak_position, .genreResults .weeks_on_chart, .genreResults .data, .headers .header {
   display: flex;
   flex: 1 0 25%;
   padding: 0 10px;

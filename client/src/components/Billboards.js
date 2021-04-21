@@ -28,37 +28,7 @@ export default class Billboards extends React.Component {
 
 	
 	/* ---- Billboards ---- */
-	componentDidMount() {
-		// Send an HTTP request to the server.
-		// fetch("http://localhost:8081/billboards",
-		// {
-		//   method: 'GET' // The type of HTTP request.
-		// }).then(res => {
-		//   // Convert the response data to a JSON.
-      	// 	return res.json();
-      
-		// }, err => {
-		//   // Print the error if there is one.
-		//   console.log(err);
-		// }).then(billboardList => {
-		//   if (!billboardList) return;
-		//   // Map each genreObj in genreList to an HTML element:
-		//   // A button which triggers the showMovies function for each genre.
-		//   let billboardDivs = billboardList.map((billboardObj, i) =>
-		// //   <option value={billboardObj.billboard}>{billboardObj.billboard}</option> 
-		//   <option value={billboardObj.week_id}>{billboardObj.week_id}</option>  
-		//   );
-	
-		  
-	
-		//   // Set the state of the genres list to the value returned by the HTTP response from the server.
-		//   this.setState({
-        // 	billboards: billboardDivs
-		//   });
-		// }, err => {
-		//   // Print the error if there is one.
-		//   console.log(err);
-		// });
+	componentDidMount() {	
 
 		fetch("http://localhost:8081/billboardsy/",
 		{
@@ -77,37 +47,20 @@ export default class Billboards extends React.Component {
 		  );
 		  // Set the state of the years list to the value returned by the HTTP response from the server.
 		  this.setState({
-        	years: yearDivs
+        	years: yearDivs,
+			months: [<option value={'1'}>{'1'}</option>,<option value={'2'}>{'2'}</option>,
+			<option value={'3'}>{'3'}</option>, <option value={'4'}>{'4'}</option>, 
+			<option value={'5'}>{'5'}</option>,<option value={'6'}>{'6'}</option>,
+			<option value={'7'}>{'7'}</option>,<option value={'8'}>{'8'}</option>,
+			<option value={'9'}>{'9'}</option>,<option value={'10'}>{'10'}</option>,
+			<option value={'11'}>{'11'}</option>,<option value={'12'}>{'12'}</option>]
 		  });
 		}, err => {
 		  // Print the error if there is one.
 		  console.log(err);
 		});
 
-		fetch("http://localhost:8081/billboardsm/",
-		{
-		  method: 'GET' // The type of HTTP request.
-		}).then(res => {
-		  // Convert the response data to a JSON.
-      		return res.json();
-		}, err => {
-		  // Print the error if there is one.
-		  console.log(err);
-		}).then(monthList => {
-		  if (!monthList) return;
-		  // Map each monthObj in genreList to an HTML element:
-		  let monthDivs = monthList.map((monthObj, i) =>
-		 	 <option value={monthObj.month}>{monthObj.month}</option>  
-		  );
-		  // Set the state of the months list to the value returned by the HTTP response from the server.
-		  this.setState({
-        	months: monthDivs
-		  });
-		}, err => {
-		  // Print the error if there is one.
-		  console.log(err);
-		});
-
+		
 		console.log("http://localhost:8081/billboardsd/" + this.selectedYear + "/" + this.selectedMonth)
 
 		fetch("http://localhost:8081/billboardsd/" + this.selectedYear + "/" + this.selectedMonth,
@@ -146,9 +99,7 @@ export default class Billboards extends React.Component {
 		let value = event.target.value;
 		let name = event.target.name;
 	  
-		// this.setState({
-		// 	[name]: value
-		// });
+		
 
 		if (name == 'selectedYear'){
 			console.log("Update to year");
@@ -229,7 +180,7 @@ export default class Billboards extends React.Component {
 					release_date={song.release_date} release_year={song.release_year} acousticness={song.acousticness} danceability={song.danceability} 
 					duration_ms={song.duration_ms} energy={song.energy} explicit={song.explicit} instrumentalness={song.instrumentalness} musical_key={song.musical_key}
 					liveness={song.liveness} loudness={song.loudness} mode={song.mode} popularity={song.popularity} speechiness={song.speechiness} 
-					tempo={song.tempo} valence={song.valence} genre={song.genre}/>
+					tempo={song.tempo} valence={song.valence} genre={song.genre} spotify_id={song.spotify_id}/>
 				</div>
 				
 			);

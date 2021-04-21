@@ -13,5 +13,6 @@ module.exports = {
   port: "3306",
   user: "admin",
   password: "BG37ykiWECHwz2n",
-  database: "SpotifyProject2"
+  database: "SpotifyProject2",
+  multipleStatements: true // test
 };

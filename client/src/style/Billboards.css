@@ -6,6 +6,12 @@ main { margin: auto; max-width: 960px; }
   margin-top: 50px;
 }
 
+/* .navbar-nav {
+  flex-flow: column wrap;
+} */
+
+
+
 .jumbotron {
   max-width: 1900px;
   /* max-height: 200px; */

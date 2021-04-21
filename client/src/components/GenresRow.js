@@ -1,44 +1,44 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { slideDown, slideUp } from './Collapse';
-import ArtistsInnerRow from './ArtistsInnerRow';
+import GenresInnerRow from './GenresInnerRow';
 
 
-export default class ArtistsRow extends React.Component {
+export default class GenresRow extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			artistName: this.props.artist_name,
-			recArtistsInner: []
+			genreName: this.props.genre,
+			recGenresInner: []
 		}
 	}
 	
 	state = { expanded: false }
 
 	
-
 	// test
-	submitArtistInner() {
-		fetch("http://localhost:8081/artists_top_songs/" + this.state.artistName,
+	submitGenreInner() {
+		console.log("http://localhost:8081/genres_top_songs/" + this.state.genreName);
+
+		fetch("http://localhost:8081/genres_top_songs/" + this.state.genreName,
 		{
 			method: "GET"
 		}).then(res => {
 			return res.json();
 		}, err => {
 			console.log(err);
-		}).then(artistsList => {
-			console.log(artistsList); //displays your JSON object in the console
+		}).then(genresList => {
+			console.log(genresList); //displays your JSON object in the console
 
-			let artistsDivs = artistsList.map((artist, i) => 
+			let genresDivs = genresList.map((genre, i) => 
 				<div id="results" key={i} className="results-container">
-					<ArtistsInnerRow song_title={artist.song_title} artist_name={artist.artist_name} peak_position={artist.peak_position} weeks_on_chart={artist.weeks_on_chart}
-					release_date={artist.release_date} release_year={artist.release_year} />
+					<GenresInnerRow song_title={genre.song_title} artist_name={genre.artist_name} peak_position={genre.peak_position} weeks_on_chart={genre.weeks_on_chart}
+					release_date={genre.release_date} release_year={genre.release_year} />
 				</div>
-				
 			);
 
 			this.setState({
-				recArtistsInner: artistsDivs
+				recGenresInner: genresDivs
 			});
 		});
 	}
@@ -51,7 +51,7 @@ export default class ArtistsRow extends React.Component {
 		  () => {
 			if (this.refs.expanderBody) {
 			  slideDown(this.refs.expanderBody);
-			  this.submitArtistInner();
+			  this.submitGenreInner();
 			}
 		  }
 		);
@@ -89,7 +89,6 @@ export default class ArtistsRow extends React.Component {
 				
 				<tr key="main" onClick={this.toggleExpander}>
 					<div className="songResults">
-						<div className="data">{this.props.artist_name}</div>
 						<div className="data">{this.props.genre}</div>
 						<div className="data">{this.props.songs_in_database}</div>
 					</div>
@@ -125,12 +124,13 @@ export default class ArtistsRow extends React.Component {
 						  </div>
 							<hr></hr>
 							<div className="headers">
+								<div className="header"><strong>Top Artists</strong></div>
 								<div className="header"><strong>Top Songs</strong></div>
 								<div className="header"><strong>Top Weeks On Chart: {this.props.weeks_on_chart}</strong></div>
 								<div className="header"><strong>Top Peak Position: {this.props.peak_position}</strong></div>
 							</div>
 						  	<div className="results-container" id="results">
-			    				{this.state.recArtistsInner}
+			    				{this.state.recGenresInner}
 			    			</div>
 						</div>
 					  </div>
@@ -141,25 +141,25 @@ export default class ArtistsRow extends React.Component {
 	} else {
 		return [
 			<tr key="main" onClick={this.toggleExpander}>
-			  <div className="songResults">
-				<div className="data">{this.props.artist_name}</div>
-				<div className="data">{this.props.genre}</div>
-				<div className="data">{this.props.songs_in_database}</div>
-			  </div>	
+			  	<div className="songResults">
+					<div className="data">{this.props.genre}</div>
+					<div className="data">{this.props.songs_in_database}</div>
+				</div>
 			  
 			</tr>,
 			this.state.expanded && (
 			  <tr className="expandable" key="tr-expander">
 				<td className="uk-background-muted" colSpan={6}>
 				  <div ref="expanderBody" className="inner uk-grid">
-					<div className="uk-width-3-4">
-					  	<div className="headers">
+					<div className="uk-width-3-4">					  
+						<div className="headers">
+							<div className="header"><strong>Top Artists</strong></div>
 							<div className="header"><strong>Top Songs</strong></div>
 							<div className="header"><strong>Top Weeks On Chart: {this.props.weeks_on_chart}</strong></div>
 							<div className="header"><strong>Top Peak Position: {this.props.peak_position}</strong></div>
 						</div>
 						<div className="results-container" id="results">
-							{this.state.recArtistsInner}
+							{this.state.recGenresInner}
 						</div>
 					</div>
 				  </div>

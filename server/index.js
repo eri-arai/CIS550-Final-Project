@@ -22,9 +22,15 @@ app.get('/billboardsd/:year/:month', routes.getBillboardChartDay);
 
 app.get('/songs', routes.getAllSongs);
 app.get('/songs/:name', routes.getSongsByTitle);
+app.get('/songsv/:name', routes.getSongsByVagueTitle);
 
 app.get('/artists', routes.getAllArtists);
 app.get('/artists/:name', routes.getArtistByName);
+app.get('/artists_top_songs/:name', routes.getArtistTopSongsByName);
+
+app.get('/genres', routes.getAllGenres);
+app.get('/genres/:genre', routes.getGenreByName);
+app.get('/genres_top_songs/:genre', routes.getGenreTopSongsByName);
 
 app.get('/playlist', routes.getAllCharacteristics);
 app.get('/playlist/:characteristic', routes.getCharacteristic);

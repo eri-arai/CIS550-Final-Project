@@ -25,10 +25,8 @@ export default class Songs extends React.Component {
 		});
 	}
 
-	/* ---- Q2 (Songs) ---- */
-	// Hint: Name of song submitted is contained in `this.state.songName`.
 	submitSong() {
-		// console.log("HI");
+		console.log("http://localhost:8081/songs/" + this.state.songName)
 		fetch("http://localhost:8081/songs/" + this.state.songName,
 		{
 			method: "GET"
@@ -38,23 +36,53 @@ export default class Songs extends React.Component {
 			console.log(err);
 		}).then(songsList => {
 			console.log(songsList); //displays your JSON object in the console
-			let songsDivs = songsList.map((song, i) => 
-				// <RecommendationsRow key={recommendation.id} song={recommendation} />
-				<div id="results" key={i} className="results-container">
-					{/* <SongsRow song_title={song.song_title} artist_name={song.artist_name} acousticness={song.acousticness} danceability={song.danceability}/> */}
-					<SongsRow song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
-					release_date={song.release_date} release_year={song.release_year} acousticness={song.acousticness} danceability={song.danceability} 
-					duration_ms={song.duration_ms} energy={song.energy} explicit={song.explicit} instrumentalness={song.instrumentalness} musical_key={song.musical_key}
-					liveness={song.liveness} loudness={song.loudness} mode={song.mode} popularity={song.popularity} speechiness={song.speechiness} 
-					tempo={song.tempo} valence={song.valence} genre={song.genre}/>
-				</div>
-				
-			);
+			
+			if (songsList.length > 0){
+				let songsDivs = songsList.map((song, i) => 
+					// <RecommendationsRow key={recommendation.id} song={recommendation} />
+					<div id="results" key={i} className="results-container">
+						{/* <SongsRow song_title={song.song_title} artist_name={song.artist_name} acousticness={song.acousticness} danceability={song.danceability}/> */}
+						<SongsRow song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
+						release_date={song.release_date} release_year={song.release_year} acousticness={song.acousticness} danceability={song.danceability} 
+						duration_ms={song.duration_ms} energy={song.energy} explicit={song.explicit} instrumentalness={song.instrumentalness} musical_key={song.musical_key}
+						liveness={song.liveness} loudness={song.loudness} mode={song.mode} popularity={song.popularity} speechiness={song.speechiness} 
+						tempo={song.tempo} valence={song.valence} genre={song.genre} spotify_id = {song.spotify_id}/>
+					</div>
+					
+				);
 
-			this.setState({
-				recSongs: songsDivs
+				this.setState({
+					recSongs: songsDivs
+				});
+			} else {
+				fetch("http://localhost:8081/songsv/" + this.state.songName,
+			{
+				method: "GET"
+			}).then(res => {
+				return res.json();
+			}, err => {
+				console.log(err);
+			}).then(songsList => {
+				console.log(songsList); //displays your JSON object in the console
+				let songsDivs = songsList.map((song, i) => 
+					<div id="results" key={i} className="results-container">
+						<SongsRow song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
+						release_date={song.release_date} release_year={song.release_year} acousticness={song.acousticness} danceability={song.danceability} 
+						duration_ms={song.duration_ms} energy={song.energy} explicit={song.explicit} instrumentalness={song.instrumentalness} musical_key={song.musical_key}
+						liveness={song.liveness} loudness={song.loudness} mode={song.mode} popularity={song.popularity} speechiness={song.speechiness} 
+						tempo={song.tempo} valence={song.valence} genre={song.genre} spotify_id = {song.spotify_id}/>
+					</div>
+					
+				);
+
+				this.setState({
+					recSongs: songsDivs
+				});
 			});
+			}
+
 		});
+
 	}
 
 	
