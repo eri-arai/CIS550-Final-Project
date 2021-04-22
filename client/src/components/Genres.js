@@ -31,33 +31,39 @@ export default class Genres extends React.Component {
 		});
 		console.log("http://localhost:8081/genres/" + this.state.genreName);
 		
-		fetch("http://localhost:8081/genres/" + this.state.genreName,
-		{
-			method: "GET"
-		}).then(res => {
-			return res.json();
-		}, err => {
-			console.log(err);
-		}).then(genresList => {
-			console.log(genresList); //displays your JSON object in the console
 
-			let genresDivs = genresList.map((genre, i) => 
-				// <RecommendationsRow key={recommendation.id} genre={recommendation} />
-				<div id="results" key={i} className="results-container">
-					{/* <GenresRow artist_name={genre.artist_name}/> */}
-					<GenresRow song_title={genre.song_title} artist_name={genre.artist_name} week_position={genre.week_position} peak_position={genre.peak_position} weeks_on_chart={genre.weeks_on_chart}
-					release_date={genre.release_date} release_year={genre.release_year} acousticness={genre.acousticness} danceability={genre.danceability} 
-					duration_ms={genre.duration_ms} energy={genre.energy} explicit={genre.explicit} instrumentalness={genre.instrumentalness} musical_key={genre.musical_key}
-					liveness={genre.liveness} loudness={genre.loudness} mode={genre.mode} popularity={genre.popularity} speechiness={genre.speechiness} 
-					tempo={genre.tempo} valence={genre.valence} genre={genre.genre} songs_in_database={genre.songs_in_database}/>
-				</div>
-				
-			);
+		if (this.state.genreName === undefined | this.state.genreName == ''){
+			// this.genreName = '';
+			console.log('Invalid');
+		} else {
+			fetch("http://localhost:8081/genres/" + this.state.genreName,
+			{
+				method: "GET"
+			}).then(res => {
+				return res.json();
+			}, err => {
+				console.log(err);
+			}).then(genresList => {
+				console.log(genresList); //displays your JSON object in the console
 
-			this.setState({
-				recGenres: genresDivs
+				let genresDivs = genresList.map((genre, i) => 
+					// <RecommendationsRow key={recommendation.id} genre={recommendation} />
+					<div id="results" key={i} className="results-container">
+						{/* <GenresRow artist_name={genre.artist_name}/> */}
+						<GenresRow song_title={genre.song_title} artist_name={genre.artist_name} week_position={genre.week_position} peak_position={genre.peak_position} weeks_on_chart={genre.weeks_on_chart}
+						release_date={genre.release_date} release_year={genre.release_year} acousticness={genre.acousticness} danceability={genre.danceability} 
+						duration_ms={genre.duration_ms} energy={genre.energy} explicit={genre.explicit} instrumentalness={genre.instrumentalness} musical_key={genre.musical_key}
+						liveness={genre.liveness} loudness={genre.loudness} mode={genre.mode} popularity={genre.popularity} speechiness={genre.speechiness} 
+						tempo={genre.tempo} valence={genre.valence} genre={genre.genre} songs_in_database={genre.songs_in_database}/>
+					</div>
+					
+				);
+
+				this.setState({
+					recGenres: genresDivs
+				});
 			});
-		});
+		}
 	}
 
 	

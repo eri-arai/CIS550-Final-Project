@@ -58,34 +58,39 @@ export default class Playlist extends React.Component {
 	/* ---- Q3b (Best Genres) ---- */
 	submitCharacteristic() {
 		this.setState({
-			songs: ''
+			songs: []
 		});
 		// var fixed = this.state.selectedCharacteristic.replace(/\//g,"-")
 
-		console.log("http://localhost:8081/playlist/" + this.state.selectedCharacteristic);
+		if (this.state.selectedCharacteristic === undefined | this.state.selectedCharacteristic == ''){
+			// this.selectedCharacteristic = '';
+			console.log('Invalid');
+		} else {
+			console.log("http://localhost:8081/playlist/" + this.state.selectedCharacteristic);
 
-		fetch("http://localhost:8081/playlist/" + this.state.selectedCharacteristic,
-		// fetch("http://localhost:8081/characteristics/" + fixed,
-		{
-			method: "GET"
-		}).then(res => {
-			return res.json();
-		}, err => {
-			console.log(err);
-		}).then(songList => {
-			console.log(songList); //displays your JSON object in the console
-			let songDivs = songList.map((song, i) => 
-				// <RecommendationsRow key={recommendation.id} movie={recommendation} />
-				<div id="results" key={i} className="results-container">
-					<PlaylistRow song_title={song.song_title} artist_name={song.artist_name} spotify_id={song.spotify_id}/>
-				</div>
-				
-			);
+			fetch("http://localhost:8081/playlist/" + this.state.selectedCharacteristic,
+			// fetch("http://localhost:8081/characteristics/" + fixed,
+			{
+				method: "GET"
+			}).then(res => {
+				return res.json();
+			}, err => {
+				console.log(err);
+			}).then(songList => {
+				console.log(songList); //displays your JSON object in the console
+				let songDivs = songList.map((song, i) => 
+					// <RecommendationsRow key={recommendation.id} movie={recommendation} />
+					<div id="results" key={i} className="results-container">
+						<PlaylistRow song_title={song.song_title} artist_name={song.artist_name} spotify_id={song.spotify_id}/>
+					</div>
+					
+				);
 
-			this.setState({
-				songs: songDivs
+				this.setState({
+					songs: songDivs
+				});
 			});
-		});
+		}
 	}
 
 	render() {

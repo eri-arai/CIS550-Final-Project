@@ -29,32 +29,37 @@ export default class Artists extends React.Component {
 		this.setState({
 			recArtists: ''
 		});
-		console.log("http://localhost:8081/artists/" + this.state.artistName);
-		fetch("http://localhost:8081/artists/" + this.state.artistName,
-		{
-			method: "GET"
-		}).then(res => {
-			return res.json();
-		}, err => {
-			console.log(err);
-		}).then(artistsList => {
-			console.log(artistsList); //displays your JSON object in the console
+		if (this.state.artistName === undefined | this.state.artistName == ''){
+			// this.artistName = '';
+			console.log('Invalid');
+		} else {
+			console.log("http://localhost:8081/artists/" + this.state.artistName);
+			fetch("http://localhost:8081/artists/" + this.state.artistName,
+			{
+				method: "GET"
+			}).then(res => {
+				return res.json();
+			}, err => {
+				console.log(err);
+			}).then(artistsList => {
+				console.log(artistsList); //displays your JSON object in the console
 
-			let artistsDivs = artistsList.map((artist, i) => 
-				<div id="results" key={i} className="results-container">
-					<ArtistsRow song_title={artist.song_title} artist_name={artist.artist_name} week_position={artist.week_position} peak_position={artist.peak_position} weeks_on_chart={artist.weeks_on_chart}
-					release_date={artist.release_date} release_year={artist.release_year} acousticness={artist.acousticness} danceability={artist.danceability} 
-					duration_ms={artist.duration_ms} energy={artist.energy} explicit={artist.explicit} instrumentalness={artist.instrumentalness} musical_key={artist.musical_key}
-					liveness={artist.liveness} loudness={artist.loudness} mode={artist.mode} popularity={artist.popularity} speechiness={artist.speechiness} 
-					tempo={artist.tempo} valence={artist.valence} genre={artist.genre} songs_in_database={artist.songs_in_database}/>
-				</div>
-				
-			);
+				let artistsDivs = artistsList.map((artist, i) => 
+					<div id="results" key={i} className="results-container">
+						<ArtistsRow song_title={artist.song_title} artist_name={artist.artist_name} week_position={artist.week_position} peak_position={artist.peak_position} weeks_on_chart={artist.weeks_on_chart}
+						release_date={artist.release_date} release_year={artist.release_year} acousticness={artist.acousticness} danceability={artist.danceability} 
+						duration_ms={artist.duration_ms} energy={artist.energy} explicit={artist.explicit} instrumentalness={artist.instrumentalness} musical_key={artist.musical_key}
+						liveness={artist.liveness} loudness={artist.loudness} mode={artist.mode} popularity={artist.popularity} speechiness={artist.speechiness} 
+						tempo={artist.tempo} valence={artist.valence} genre={artist.genre} songs_in_database={artist.songs_in_database}/>
+					</div>
+					
+				);
 
-			this.setState({
-				recArtists: artistsDivs
+				this.setState({
+					recArtists: artistsDivs
+				});
 			});
-		});
+		}
 	}
 
 	

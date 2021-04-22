@@ -497,9 +497,10 @@ function getCharacteristic(req, res) {
   }
   else {
    query = `
-    SELECT COLUMN_NAME 
-    FROM INFORMATION_SCHEMA.COLUMNS
-    WHERE TABLE_NAME = N'musical_characteristics';
+    SELECT s.song_title
+    FROM song s
+    WHERE s.song_id = ''
+    ;
   `;
   }
 connection.query(query, function(err, rows, fields) {
