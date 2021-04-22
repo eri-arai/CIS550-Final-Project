@@ -243,6 +243,10 @@ export default class Advanced extends React.Component {
 
 	  // hit Submit
 	submitAdvanced() {
+		this.setState({
+			songs: '',
+		});
+
 		if (this.selectedAco === undefined) this.selectedAco = 0;
 		if (this.selectedDan === undefined) this.selectedDan = 0;
 		if (this.selectedDur === undefined) this.selectedDur = 0;

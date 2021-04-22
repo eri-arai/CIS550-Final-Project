@@ -57,6 +57,9 @@ export default class Playlist extends React.Component {
 
 	/* ---- Q3b (Best Genres) ---- */
 	submitCharacteristic() {
+		this.setState({
+			songs: ''
+		});
 		// var fixed = this.state.selectedCharacteristic.replace(/\//g,"-")
 
 		console.log("http://localhost:8081/playlist/" + this.state.selectedCharacteristic);

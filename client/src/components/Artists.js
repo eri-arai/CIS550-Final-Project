@@ -26,6 +26,9 @@ export default class Artists extends React.Component {
 	}
 
 	submitArtist() {
+		this.setState({
+			recArtists: ''
+		});
 		console.log("http://localhost:8081/artists/" + this.state.artistName);
 		fetch("http://localhost:8081/artists/" + this.state.artistName,
 		{

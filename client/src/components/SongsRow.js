@@ -137,7 +137,6 @@ export default class SongsRow extends React.Component {
 							<div className="data">Energy: {this.props.energy}</div>
 						  </div>
 						  <div className="songResults">
-							{/* <div className="data">Explicit: {this.props.explicit}</div> */}
 							<div className="data">Explicit: {explicit}</div>
 							<div className="data">Genre: {genre}</div>
 							<div className="data">Instrumentalness: {this.props.instrumentalness}</div>
@@ -145,9 +144,7 @@ export default class SongsRow extends React.Component {
 						  </div>
 						  <div className="songResults">
 							<div className="data">Loudness: {this.props.loudness}</div>
-							{/* <div className="data">Mode: {this.props.mode}</div> */}
 							<div className="data">Mode: {mode}</div>
-							{/* <div className="data">Musical key: {this.props.musical_key}</div> */}
 							<div className="data">Musical key: {musical_key}</div>
 							<div className="data">Popularity: {this.props.popularity}</div>
 						  </div>

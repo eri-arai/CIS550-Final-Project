@@ -26,6 +26,9 @@ export default class Genres extends React.Component {
 	}
 
 	submitGenre() {
+		this.setState({
+			recGenres: ''
+		});
 		console.log("http://localhost:8081/genres/" + this.state.genreName);
 		
 		fetch("http://localhost:8081/genres/" + this.state.genreName,

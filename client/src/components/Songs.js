@@ -26,6 +26,10 @@ export default class Songs extends React.Component {
 	}
 
 	submitSong() {
+		this.setState({
+			recSongs: ''
+		});
+		
 		console.log("http://localhost:8081/songs/" + this.state.songName)
 		fetch("http://localhost:8081/songs/" + this.state.songName,
 		{

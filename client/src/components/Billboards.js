@@ -158,6 +158,10 @@ export default class Billboards extends React.Component {
 
 	  // hit Submit
 	submitBillboard() {
+		this.setState({
+			songs: '',
+		});
+		
 		// var fixed = this.state.selectedBillboard.replace(/\//g,"-")
 		var fixed = this.selectedMonth + "-" + this.selectedDay + "-" + this.selectedYear
 
@@ -176,11 +180,13 @@ export default class Billboards extends React.Component {
 			let songDivs = songList.map((song, i) => 
 				// <RecommendationsRow key={recommendation.id} movie={recommendation} />
 				<div id="results" key={i} className="results-container">
-					<BillboardRow song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
+					{/* <BillboardRow song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
 					release_date={song.release_date} release_year={song.release_year} acousticness={song.acousticness} danceability={song.danceability} 
 					duration_ms={song.duration_ms} energy={song.energy} explicit={song.explicit} instrumentalness={song.instrumentalness} musical_key={song.musical_key}
 					liveness={song.liveness} loudness={song.loudness} mode={song.mode} popularity={song.popularity} speechiness={song.speechiness} 
-					tempo={song.tempo} valence={song.valence} genre={song.genre} spotify_id={song.spotify_id}/>
+					tempo={song.tempo} valence={song.valence} genre={song.genre} spotify_id={song.spotify_id}/> */}
+					<BillboardRow song_id={song.song_id} song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
+					release_date={song.release_date} release_year={song.release_year} genre={song.genre} />
 				</div>
 				
 			);
@@ -200,8 +206,7 @@ export default class Billboards extends React.Component {
 
 			this.setState({
 				songs: songDivs,
-				//test
-				// songsTest: songDivsTest
+				
 
 			});
 		});

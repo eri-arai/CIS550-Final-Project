@@ -10,6 +10,7 @@ var connection = mysql.createPool(config);
 
 
 // Get all billboards for the dropdown options
+// No longer used
 function getAllBillboards(req, res) {
   console.log("inputWeek");
 
@@ -47,6 +48,7 @@ function getBillboardChartYear(req, res) {
 };
 
 // Get all billboard months for the dropdown options
+// No longer used
 function getBillboardChartMonth(req, res) {
   console.log("inputMonth");
 
@@ -90,14 +92,45 @@ function getBillboardChartByWeek(req, res) {
   console.log(inputWeek);
 
 
+  // var query = `
+  //   SELECT *
+  //   FROM entry e JOIN song s ON e.song_id = s.song_id
+  //   JOIN played_by pb ON s.song_id = pb.song_id
+  //   JOIN musical_characteristics mc ON s.song_id = mc.song_id
+  //   JOIN artist a ON pb.artist_name = a.artist_name
+  //   WHERE e.week_id =  '${inputWeek}'
+  //   ORDER BY e.week_position;
+  // `;
   var query = `
-    SELECT *
+    SELECT s.song_id, s.song_title, a.artist_name, a.genre, e.week_position
     FROM entry e JOIN song s ON e.song_id = s.song_id
     JOIN played_by pb ON s.song_id = pb.song_id
-    JOIN musical_characteristics mc ON s.song_id = mc.song_id
     JOIN artist a ON pb.artist_name = a.artist_name
     WHERE e.week_id =  '${inputWeek}'
     ORDER BY e.week_position;
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+};
+
+// Get a song by song_id for billboard
+function getBillboardChartByWeekAndSong(req, res) {
+  var inputSong = req.params.song;
+  inputSong = inputSong.replace(/-----/g,'/'); // this is only relevant to a couple songs
+  console.log("song_id ", inputSong);
+  var query = `
+    SELECT s.peak_position, s.weeks_on_chart, s.release_date, s.release_year,
+    mc.acousticness, mc.danceability, mc.duration_ms, mc.energy,
+    mc.explicit, mc.instrumentalness, mc.liveness, mc.loudness,
+    mc.mode, mc.musical_key, mc.popularity, mc.speechiness, mc.tempo, 
+    mc.valence, s.spotify_id
+    FROM song s 
+    JOIN musical_characteristics mc ON s.song_id = mc.song_id
+    WHERE s.song_id = '${inputSong}';
   `;
   connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
@@ -121,13 +154,16 @@ function getAllSongs(req, res) {
   });
 };
 
-// Get a song by title
-// Maybe change to LIKE instead of =
+// Get a song by title. Uses the index on song_title.
 function getSongsByTitle(req, res) {
   var inputName = req.params.name;
   console.log("exact ", inputName);
   var query = `
-    SELECT *
+    SELECT s.song_title, a.artist_name, s.peak_position, s.weeks_on_chart, s.release_date, s.release_year,
+    mc.acousticness, mc.danceability, mc.duration_ms, mc.energy,
+    mc.explicit, mc.instrumentalness, mc.liveness, mc.loudness,
+    mc.mode, mc.musical_key, mc.popularity, mc.speechiness, mc.tempo, 
+    mc.valence, s.spotify_id, a.genre    
     FROM song s JOIN played_by pb ON s.song_id = pb.song_id
     JOIN musical_characteristics mc ON s.song_id = mc.song_id
     JOIN artist a ON a.artist_name = pb.artist_name
@@ -143,11 +179,16 @@ function getSongsByTitle(req, res) {
   });
 };
 
+// This search won't use the index on song_title, so it is only used if getSongsByTitle() does not return any matches
 function getSongsByVagueTitle(req, res) {
   var inputName = req.params.name;
   console.log("vague ",  inputName);
   var query = `
-    SELECT *
+    SELECT s.song_title, a.artist_name, s.peak_position, s.weeks_on_chart, s.release_date, s.release_year,
+    mc.acousticness, mc.danceability, mc.duration_ms, mc.energy,
+    mc.explicit, mc.instrumentalness, mc.liveness, mc.loudness,
+    mc.mode, mc.musical_key, mc.popularity, mc.speechiness, mc.tempo, 
+    mc.valence, s.spotify_id, a.genre 
     FROM song s JOIN played_by pb ON s.song_id = pb.song_id
     JOIN musical_characteristics mc ON s.song_id = mc.song_id
     JOIN artist a ON a.artist_name = pb.artist_name
@@ -179,8 +220,7 @@ function getAllArtists(req, res) {
 
 
 
-// Get artist by name
-// Should probably change to LIKE intead of =
+// Get artist by name. 
 function getArtistByName(req, res) {
   var inputName = req.params.name;
   console.log(inputName);
@@ -212,6 +252,7 @@ function getArtistByName(req, res) {
   });
 };
 
+// Get top songs by an artist
 function getArtistTopSongsByName(req, res) {
   var inputName = req.params.name;
   console.log("in getArtistTopSongs ", inputName);
@@ -236,10 +277,8 @@ function getArtistTopSongsByName(req, res) {
 };
 
 
-// Get all genres
+// Get all genres. Only used for testing.
 function getAllGenres(req, res) {
-  // var inputGenre = req.params.genre;
-  // console.log("in getArtistTopSongs ", inputGenre);
   var query = `
   SELECT DISTINCT a.genre
     FROM artist a
@@ -248,12 +287,12 @@ function getAllGenres(req, res) {
   connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
     else {
-      // console.log(rows)
       res.json(rows);
     }
   });
 };
 
+// Get averages for a genre
 function getGenreByName(req, res) {
   // console.log(req);
   var inputGenre = req.params.genre;
@@ -280,6 +319,7 @@ function getGenreByName(req, res) {
   });
 };
 
+// Get top songs within a genre
 function getGenreTopSongsByName(req, res) {
   var inputGenre = req.params.genre;
   console.log("in getGenreTopSongs ", inputGenre);
@@ -303,7 +343,7 @@ function getGenreTopSongsByName(req, res) {
   });
 };
 
-// Get all characteristics
+// Get all characteristics. Only used for testing.
 function getAllCharacteristics(req, res) {
   var query = `
     SELECT COLUMN_NAME 
@@ -319,8 +359,7 @@ function getAllCharacteristics(req, res) {
   });
 };
 
-// Get characteristics based on options, sort of the custom playlist thing. 
-// Definitely needs a lot of work. This was just testing.
+// Get playlist results  
 function getCharacteristic(req, res) {
   var query = '';
   
@@ -370,7 +409,7 @@ function getCharacteristic(req, res) {
     played_by.artist_name AS artist_name, song.spotify_id 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
-    WHERE m.energy < .6 AND m.tempo < 60 AND m.danceability < .6 AND m.popularity > 70 AND song.release_year > 2015
+    WHERE m.energy < .6 AND m.tempo < 90 AND m.danceability < .6 AND m.popularity > 70 AND song.release_year > 2015
     GROUP BY song.song_title
     ORDER BY m.popularity DESC
     LIMIT 20;
@@ -472,7 +511,7 @@ connection.query(query, function(err, rows, fields) {
 };
 
 
-// Advanced search
+// Advanced search. Effectively creates a custom playlist based on user inputs.
 function advancedSearch(req, res) {
   var query = '';
   var whereStatement = '';
@@ -493,8 +532,6 @@ function advancedSearch(req, res) {
   var val = req.params.val;
   var pea = req.params.pea;
   var term = 'WHERE ';
-
-  console.log(aco, dan, dur, ene, exp)
 
   if (aco == 1){
     whereStatement = whereStatement.concat(term, 'mc.acousticness > 0.5');
@@ -544,10 +581,8 @@ function advancedSearch(req, res) {
     term = ' AND ';
   }
 
-
   var musical_key = '';
 
-  // console.log("mus = ", mus)
   if (mus < 12) {
     switch(mus){
       case '0':
@@ -589,7 +624,6 @@ function advancedSearch(req, res) {
       default:
         break;
     }
-    // console.log("musical_key = ", musical_key)
     whereStatement = whereStatement.concat(term, 'mc.musical_key = ', musical_key);
     term = ' AND ';
   }
@@ -688,6 +722,7 @@ function advancedSearch(req, res) {
 module.exports = {
   getAllBillboards: getAllBillboards,
   getBillboardChartByWeek: getBillboardChartByWeek,
+  getBillboardChartByWeekAndSong: getBillboardChartByWeekAndSong,
   getBillboardChartYear: getBillboardChartYear,
   getBillboardChartMonth: getBillboardChartMonth,
   getBillboardChartDay: getBillboardChartDay,
