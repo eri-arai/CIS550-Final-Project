@@ -531,38 +531,51 @@ function advancedSearch(req, res) {
   var spe = req.params.spe;
   var tem = req.params.tem;
   var val = req.params.val;
+  var dec = req.params.dec;
   var pea = req.params.pea;
   var term = 'WHERE ';
 
   if (aco == 1){
-    whereStatement = whereStatement.concat(term, 'mc.acousticness > 0.5');
+    whereStatement = whereStatement.concat(term, 'mc.acousticness > 0.66');
     term = ' AND ';
   } else if (aco == 2){
-    whereStatement = whereStatement.concat(term, 'mc.acousticness < 0.5');
+    whereStatement = whereStatement.concat(term, 'mc.acousticness >= 0.33 AND mc.acousticness <= 0.66');
+    term = ' AND ';
+  } else if (aco == 3){
+    whereStatement = whereStatement.concat(term, 'mc.acousticness < 0.33');
     term = ' AND ';
   }
 
   if (dan == 1){
-    whereStatement = whereStatement.concat(term, 'mc.danceability > 0.5');
+    whereStatement = whereStatement.concat(term, 'mc.danceability > 0.66');
     term = ' AND ';
   } else if (dan == 2){
-    whereStatement = whereStatement.concat(term, 'mc.danceability < 0.5');
+    whereStatement = whereStatement.concat(term, 'mc.danceability >= 0.33 AND mc.danceability <= 0.66');
     term = ' AND ';
+  } else if (dan == 3){
+  whereStatement = whereStatement.concat(term, 'mc.danceability < 0.33');
+  term = ' AND ';
   }
 
   if (dur == 1){
-    whereStatement = whereStatement.concat(term, 'mc.duration_ms > 200000');
+    whereStatement = whereStatement.concat(term, 'mc.duration_ms > 133333');
     term = ' AND ';
   } else if (dur == 2){
-    whereStatement = whereStatement.concat(term, 'mc.duration_ms < 200000');
+    whereStatement = whereStatement.concat(term, 'mc.duration_ms >= 66666 AND mc.duration_ms <= 133333');
+    term = ' AND ';
+  } else if (dur == 3){
+    whereStatement = whereStatement.concat(term, 'mc.duration_ms < 66666');
     term = ' AND ';
   }
 
   if (ene == 1){
-    whereStatement = whereStatement.concat(term, 'mc.energy > 0.5');
+    whereStatement = whereStatement.concat(term, 'mc.energy > 0.66');
     term = ' AND ';
   } else if (ene == 2){
-    whereStatement = whereStatement.concat(term, 'mc.energy < 0.5');
+    whereStatement = whereStatement.concat(term, 'mc.energy >= 0.33 AND mc.energy <= 0.66');
+    term = ' AND ';
+  } else if (ene == 3){
+    whereStatement = whereStatement.concat(term, 'mc.energy < 0.33');
     term = ' AND ';
   }
 
@@ -575,10 +588,13 @@ function advancedSearch(req, res) {
   }
 
   if (ins == 1){
-    whereStatement = whereStatement.concat(term, 'mc.instrumentalness > 0.001');
+    whereStatement = whereStatement.concat(term, 'mc.instrumentalness > 0.066');
     term = ' AND ';
   } else if (ins == 2){
-    whereStatement = whereStatement.concat(term, 'mc.instrumentalness < 0.001');
+    whereStatement = whereStatement.concat(term, 'mc.instrumentalness >= 0.033 AND mc.instrumentalness <=0.066');
+    term = ' AND ';
+  } else if (ins == 3){
+    whereStatement = whereStatement.concat(term, 'mc.instrumentalness < 0.033');
     term = ' AND ';
   }
 
@@ -633,15 +649,21 @@ function advancedSearch(req, res) {
     whereStatement = whereStatement.concat(term, 'mc.liveness > 0.2');
     term = ' AND ';
   } else if (liv == 2){
-    whereStatement = whereStatement.concat(term, 'mc.liveness < 0.2');
+    whereStatement = whereStatement.concat(term, 'mc.liveness >= 0.05 AND mc.liveness <= 0.2');
+    term = ' AND ';
+  } else if (liv == 3){
+    whereStatement = whereStatement.concat(term, 'mc.liveness < 0.05');
     term = ' AND ';
   }
 
   if (lou == 1){
-    whereStatement = whereStatement.concat(term, 'mc.loudness > -10');
+    whereStatement = whereStatement.concat(term, 'mc.loudness > -7.5');
     term = ' AND ';
   } else if (lou == 2){
-    whereStatement = whereStatement.concat(term, 'mc.loudness < -10');
+    whereStatement = whereStatement.concat(term, 'mc.loudness >= -15 AND mc.loudness <= -7.5');
+    term = ' AND ';
+  } else if (lou == 3){
+    whereStatement = whereStatement.concat(term, 'mc.loudness < -15');
     term = ' AND ';
   }
 
@@ -654,10 +676,13 @@ function advancedSearch(req, res) {
   }
 
   if (pop == 1){
-    whereStatement = whereStatement.concat(term, 'mc.popularity > 25');
+    whereStatement = whereStatement.concat(term, 'mc.popularity > 66');
     term = ' AND ';
   } else if (pop == 2){
-    whereStatement = whereStatement.concat(term, 'mc.popularity < 25');
+    whereStatement = whereStatement.concat(term, 'mc.popularity >= 33 AND mc.popularity <= 66');
+    term = ' AND ';
+  } else if (pop == 3){
+    whereStatement = whereStatement.concat(term, 'mc.popularity < 33');
     term = ' AND ';
   }
 
@@ -670,26 +695,64 @@ function advancedSearch(req, res) {
   }
 
   if (tem == 1){
-    whereStatement = whereStatement.concat(term, 'mc.tempo > 115');
+    whereStatement = whereStatement.concat(term, 'mc.tempo > 120');
     term = ' AND ';
   } else if (tem == 2){
-    whereStatement = whereStatement.concat(term, 'mc.tempo < 115');
+    whereStatement = whereStatement.concat(term, 'mc.tempo >= 60 AND mc.tempo <=120');
+    term = ' AND ';
+  } else if (tem == 3){
+    whereStatement = whereStatement.concat(term, 'mc.tempo < 60');
     term = ' AND ';
   }
 
   if (val == 1){
-    whereStatement = whereStatement.concat(term, 'mc.valence > 0.5');
+    whereStatement = whereStatement.concat(term, 'mc.valence > 0.66');
     term = ' AND ';
   } else if (val == 2){
-    whereStatement = whereStatement.concat(term, 'mc.valence < 0.5');
+    whereStatement = whereStatement.concat(term, 'mc.valence >= 0.3 AND mc.valence <= 0.66');
+    term = ' AND ';
+  } else if (val == 3){
+    whereStatement = whereStatement.concat(term, 'mc.valence < 0.3');
+    term = ' AND ';
+  }
+
+  if (dec == 1){
+    whereStatement = whereStatement.concat(term, 's.release_year >= 2010');
+    term = ' AND ';
+  } else if (dec == 2){
+    whereStatement = whereStatement.concat(term, 's.release_year >= 2000 AND s.release_year < 2010');
+    term = ' AND ';
+  } else if (dec == 3){
+    whereStatement = whereStatement.concat(term, 's.release_year >= 1990 AND s.release_year < 2000');
+    term = ' AND ';
+  } else if (dec == 4){
+    whereStatement = whereStatement.concat(term, 's.release_year >= 1980 AND s.release_year < 1990');
+    term = ' AND ';
+  } else if (dec == 5){
+    whereStatement = whereStatement.concat(term, 's.release_year >= 1970 AND s.release_year < 1980');
+    term = ' AND ';
+  } else if (dec == 6){
+    whereStatement = whereStatement.concat(term, 's.release_year >= 1960 AND s.release_year < 1970');
+    term = ' AND ';
+  } else if (dec == 7){
+    whereStatement = whereStatement.concat(term, 's.release_year >= 1950 AND s.release_year < 1960');
+    term = ' AND ';
+  } else if (dec == 8){
+    whereStatement = whereStatement.concat(term, 's.release_year >= 1940 AND s.release_year < 1950');
+    term = ' AND ';
+  } else if (dec == 9){
+    whereStatement = whereStatement.concat(term, 's.release_year < 1940');
     term = ' AND ';
   }
 
   if (pea == 1){
-    whereStatement = whereStatement.concat(term, 's.peak_position > 0');
+    whereStatement = whereStatement.concat(term, 's.peak_position > 0 AND s.peak_position <= 10');
     term = ' AND ';
-  } else if (val == 2){
-    whereStatement = whereStatement.concat(term, 's.peak_position > 10 AND s.peak_position < 10');
+  } else if (pea == 2){
+    whereStatement = whereStatement.concat(term, 's.peak_position > 0 AND s.peak_position <= 50');
+    term = ' AND ';
+  } else if (pea == 3){
+    whereStatement = whereStatement.concat(term, 's.peak_position > 0 AND s.peak_position <= 100');
     term = ' AND ';
   }
 
@@ -701,7 +764,6 @@ function advancedSearch(req, res) {
     JOIN played_by pb ON s.song_id = pb.song_id
     JOIN musical_characteristics mc ON s.song_id = mc.song_id
     ${whereStatement}
-    GROUP BY s.spotify_id
     ORDER BY mc.popularity DESC
     LIMIT 25
     ;

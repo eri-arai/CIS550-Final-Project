@@ -38,7 +38,7 @@ app.get('/playlist', routes.getAllCharacteristics);
 app.get('/playlist/:characteristic', routes.getCharacteristic);
 
 
-app.get('/advanced/:aco/:dan/:dur/:ene/:exp/:ins/:liv/:lou/:mod/:mus/:pop/:spe/:tem/:val/:pea', routes.advancedSearch);
+app.get('/advanced/:aco/:dan/:dur/:ene/:exp/:ins/:liv/:lou/:mod/:mus/:pop/:spe/:tem/:val/:dec/:pea', routes.advancedSearch);
 
 
 app.listen(8081, () => {

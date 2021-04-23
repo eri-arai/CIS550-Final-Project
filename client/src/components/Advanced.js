@@ -25,6 +25,7 @@ export default class Advanced extends React.Component {
 			selectedSpe: "",
 			selectedTem: "",
 			selectedVal: "",
+			selectedDec: "",
 			selectedPea: "",
 
 
@@ -44,6 +45,7 @@ export default class Advanced extends React.Component {
 			spes: [], 
 			tems: [], 
 			vals: [],
+			decs: [],
 			peas: [] 
 
 		};
@@ -117,26 +119,29 @@ export default class Advanced extends React.Component {
 		this.setState({
 			
 			
-			acos: [<option value={'1'}>{'Above average acousticness'}</option>, <option value={'2'}>{'Below average acousticness'}</option>],
-			dans: [<option value={'1'}>{'Above average danceability'}</option>, <option value={'2'}>{'Below average danceability'}</option>],
-			durs: [<option value={'1'}>{'Above average duration'}</option>, <option value={'2'}>{'Below average duration'}</option>],
-			enes: [<option value={'1'}>{'Above average energy'}</option>, <option value={'2'}>{'Below average energy'}</option>],
-			exps: [<option value={'1'}>{'Not explicit'}</option>, <option value={'2'}>{'Yes explicit'}</option>],
+			acos: [<option value={'1'}>{'High acousticness'}</option>, <option value={'2'}>{'Medium acousticness'}</option>, <option value={'3'}>{'Low acousticness'}</option>],
+			dans: [<option value={'1'}>{'High danceability'}</option>, <option value={'2'}>{'Medium danceability'}</option>, <option value={'3'}>{'Low danceability'}</option>],
+			durs: [<option value={'1'}>{'Long duration'}</option>, <option value={'2'}>{'Medium duration'}</option>, <option value={'3'}>{'Short duration'}</option>],
+			enes: [<option value={'1'}>{'High energy'}</option>, <option value={'2'}>{'Medium energy'}</option>, <option value={'3'}>{'Low energy'}</option>],
+			exps: [<option value={'1'}>{'Not explicit'}</option>, <option value={'2'}>{'Explicit'}</option>],
 
-			inss: [<option value={'1'}>{'Above average instrumentalness'}</option>, <option value={'2'}>{'Below average instrumentalness'}</option>],
-			livs: [<option value={'1'}>{'Above average liveness'}</option>, <option value={'2'}>{'Below average liveness'}</option>],
-			lous: [<option value={'1'}>{'Above average loudness'}</option>, <option value={'2'}>{'Below average loudness'}</option>],
+			inss: [<option value={'1'}>{'High instrumentalness'}</option>, <option value={'2'}>{'Medium instrumentalness'}</option>, <option value={'3'}>{'Low instrumentalness'}</option>],
+			livs: [<option value={'1'}>{'High liveness'}</option>, <option value={'2'}>{'Medium liveness'}</option>, <option value={'3'}>{'Low livenless'}</option>],
+			lous: [<option value={'1'}>{'Loud'}</option>, <option value={'2'}>{'Medium'}</option>, <option value={'3'}>{'Soft'}</option>],
 			mods: [<option value={'1'}>{'Minor'}</option>, <option value={'2'}>{'Major'}</option>],
 			muss: [<option value={'0'}>{'C'}</option>, <option value={'1'}>{'C#'}</option>, <option value={'2'}>{'D'}</option>, 
 			<option value={'3'}>{'D#'}</option>, <option value={'4'}>{'E'}</option>, <option value={'5'}>{'F'}</option>, 
 			<option value={'6'}>{'F#'}</option>, <option value={'7'}>{'G'}</option>, <option value={'8'}>{'G#'}</option>, 
 			<option value={'9'}>{'A'}</option>, <option value={'10'}>{'A#'}</option>, <option value={'11'}>{'B'}</option>],
 
-			pops: [<option value={'1'}>{'Above average popularity'}</option>, <option value={'2'}>{'Below average popularity'}</option>],
-			spes: [<option value={'1'}>{'Above average speechiness'}</option>, <option value={'2'}>{'Below average speechiness'}</option>],
-			tems: [<option value={'1'}>{'Above average tempo'}</option>, <option value={'2'}>{'Below average tempo'}</option>],
-			vals: [<option value={'1'}>{'Above average valence'}</option>, <option value={'2'}>{'Below average valence'}</option>],
-			peas: [<option value={'1'}>{'Top 10'}</option>, <option value={'2'}>{'Top 100'}</option>],
+			pops: [<option value={'1'}>{'High popularity'}</option>, <option value={'2'}>{'Medium popularity'}</option>, <option value={'3'}>{'Low popularity'}</option>],
+			spes: [<option value={'1'}>{'High speechiness'}</option>, <option value={'2'}>{'Medium speechiness'}</option>, <option value={'3'}>{'Low speechiness'}</option>],
+			tems: [<option value={'1'}>{'Fast tempo'}</option>, <option value={'2'}>{'Medium tempo'}</option>, <option value={'3'}>{'Slow tempo'}</option>],
+			vals: [<option value={'1'}>{'High valence'}</option>, <option value={'2'}>{'Medium valence'}</option>, <option value={'3'}>{'Low valence'}</option>],
+			decs: [<option value={'1'}>{'2010s'}</option>, <option value={'2'}>{'2000s'}</option>, <option value={'3'}>{'1990s'}</option>
+			, <option value={'4'}>{'1980s'}</option>, <option value={'5'}>{'1970s'}</option>, <option value={'6'}>{'1960s'}</option>, <option value={'7'}>{'1950s'}</option>
+			, <option value={'8'}>{'1940s'}</option>, <option value={'9'}>{'1930s and before'}</option>],
+			peas: [<option value={'1'}>{'Top 10'}</option>, <option value={'2'}>{'Top 50'}</option>, <option value={'3'}>{'Top 100'}</option>],
 
 		  });
 
@@ -231,6 +236,11 @@ export default class Advanced extends React.Component {
 				selectedVal: value
 			});
 			this.selectedVal = value;
+		} else if (name == 'selectedDec'){
+			this.setState({
+				selectedDec: value
+			});
+			this.selectedDec = value;
 		} else if (name == 'selectedPea'){
 			this.setState({
 				selectedPea: value
@@ -263,6 +273,7 @@ export default class Advanced extends React.Component {
 		if (this.selectedSpe === undefined) this.selectedSpe = 0;
 		if (this.selectedTem === undefined) this.selectedTem = 0;
 		if (this.selectedVal === undefined) this.selectedVal = 0;
+		if (this.selectedDec === undefined) this.selectedDec = 0;
 		if (this.selectedPea === undefined) this.selectedPea = 0;
 
 
@@ -270,7 +281,7 @@ export default class Advanced extends React.Component {
 		// var fixed = this.state.selectedAdvanced.replace(/\//g,"-")
 		var fixed = this.selectedAco + "/" + this.selectedDan + "/" + this.selectedDur + "/" + this.selectedEne + "/" + this.selectedExp
 		+ "/" + this.selectedIns + "/" + this.selectedLiv + "/" + this.selectedLou + "/" + this.selectedMod + "/" + this.selectedMus
-		+ "/" + this.selectedPop + "/" + this.selectedSpe + "/" + this.selectedTem + "/" + this.selectedVal +"/" + this.selectedPea
+		+ "/" + this.selectedPop + "/" + this.selectedSpe + "/" + this.selectedTem + "/" + this.selectedVal + "/" + this.selectedDec + "/" + this.selectedPea
 		
 		// /advanced/:aco/:dan/:dur/:ene/:exp/:ins/:liv/:lou/:mod/:mus/:pop/:spe/:tem/:val
 
@@ -372,8 +383,12 @@ export default class Advanced extends React.Component {
 			            	<option select value> -- Valence -- </option>
 			            	{this.state.vals}
 			            </select>
+						<select value={this.state.selectedDec} onChange={this.handleChange} name = 'selectedDec' className="dropdown" id="billboardsDropdown">
+			            	<option select value> -- Decade -- </option>
+			            	{this.state.decs}
+			            </select>
 						<select value={this.state.selectedPea} onChange={this.handleChange} name = 'selectedPea' className="dropdown" id="billboardsDropdown">
-			            	<option select value> -- Peak Billboard Position -- </option>
+			            	<option select value> -- Peak Position -- </option>
 			            	{this.state.peas}
 			            </select>
 			            <button className="submit-btn" id="advancedSubmitBtn" onClick={this.submitAdvanced}>Submit</button>
