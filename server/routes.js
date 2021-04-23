@@ -758,16 +758,34 @@ function advancedSearch(req, res) {
 
   console.log("whereStatement: ", whereStatement);
 
+  // query = `
+  //   SELECT s.song_title, pb.artist_name AS artist_name, s.spotify_id 
+  //   FROM song s
+  //   JOIN played_by pb ON s.song_id = pb.song_id
+  //   JOIN musical_characteristics mc ON s.song_id = mc.song_id
+  //   ${whereStatement}
+  //   ORDER BY mc.popularity DESC
+  //   LIMIT 25
+  //   ;
+  // `;
   query = `
-    SELECT s.song_title, pb.artist_name AS artist_name, s.spotify_id 
+    SELECT s.song_title, pb.artist_name AS artist_name, a.genre, s.song_id
     FROM song s
     JOIN played_by pb ON s.song_id = pb.song_id
     JOIN musical_characteristics mc ON s.song_id = mc.song_id
+    JOIN artist a ON pb.artist_name = a.artist_name
     ${whereStatement}
     ORDER BY mc.popularity DESC
     LIMIT 25
     ;
   `;
+
+  // s.peak_position, s.weeks_on_chart, s.release_date, s.release_year,
+  //   mc.acousticness, mc.danceability, mc.duration_ms, mc.energy,
+  //   mc.explicit, mc.instrumentalness, mc.liveness, mc.loudness,
+  //   mc.mode, mc.musical_key, mc.popularity, mc.speechiness, mc.tempo, 
+  //   mc.valence, s.spotify_id
+
 
   console.log("query: ", query);
 

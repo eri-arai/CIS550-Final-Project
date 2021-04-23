@@ -1,6 +1,7 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import PlaylistRow from './PlaylistRow';
+// import PlaylistRow from './PlaylistRow';
+import AdvancedRow from './AdvancedRow';
 import '../style/Playlist.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -300,7 +301,8 @@ export default class Advanced extends React.Component {
 			let songDivs = songList.map((song, i) => 
 
 				<div id="results" key={i} className="results-container">
-					<PlaylistRow song_title={song.song_title} artist_name={song.artist_name} spotify_id={song.spotify_id}/>
+					{/* <PlaylistRow song_title={song.song_title} artist_name={song.artist_name} spotify_id={song.spotify_id}/> */}
+					<AdvancedRow song_id={song.song_id} song_title={song.song_title} artist_name={song.artist_name} genre={song.genre} />
 				</div>
 				
 			);
@@ -403,7 +405,7 @@ export default class Advanced extends React.Component {
 			          <div className="song">
 			            <div className="header"><strong>Song Title</strong></div>
 						<div className="header"><strong>Artist Name</strong></div>
-						<div className="header"><strong>Spotify Link</strong></div>
+						{/* <div className="header"><strong>Spotify Link</strong></div> */}
 						{/* <div className="header"><strong>Weeks On Chart</strong></div> */}
 			          </div>
 			          <div className="song-container" id="results">
