@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { slideDown, slideUp } from './Collapse';
 
 
-export default class BillboardInnerRow extends React.Component {
+export default class InnerRow extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -11,7 +11,7 @@ export default class BillboardInnerRow extends React.Component {
 	
   
 	render() {
-		console.log(this.props.song_title);
+		console.log("Spotify_id = ", this.props.spotify_id);
 
 		// console.log("We made it here");
 

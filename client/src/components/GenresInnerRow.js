@@ -11,7 +11,7 @@ export default class GenresInnerRow extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.song);
+		console.log(this.props.song_title);
 
 		return (
 			<div className="genreResults">

@@ -368,10 +368,11 @@ function getCharacteristic(req, res) {
   console.log(inputValue);
   if (inputValue == 'Uplifting'){
   query = `
-    SELECT s.song_title, pb.artist_name, s.spotify_id 
+    SELECT s.song_title, pb.artist_name, s.spotify_id, s.song_id, a.genre 
     FROM musical_characteristics mc 
       JOIN song s ON mc.song_id = s.song_id 
       JOIN played_by pb ON s.song_id = pb.song_id
+      JOIN artist a ON pb.artist_name = a.artist_name
     WHERE s.release_year > 2015 AND mc.loudness > -30 
       AND mc.tempo > 70 AND mc.acousticness > 0.5 
       AND mc.mode = 'Major' AND mc.explicit = 'No'
@@ -382,9 +383,10 @@ function getCharacteristic(req, res) {
   } else if (inputValue == 'Calming'){
   query = `
     SELECT song.song_title, 
-    played_by.artist_name AS artist_name, song.spotify_id 
+    played_by.artist_name AS artist_name, song.spotify_id, song.song_id, a.genre 
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
+    JOIN artist a ON played_by.artist_name = a.artist_name
     WHERE m.loudness < .7 AND m.tempo < 75 AND m.acousticness > .3 
     AND m.liveness < .7 AND m.explicit = 'No' AND m.popularity > 70
     AND song.release_year > 2015
@@ -395,9 +397,10 @@ function getCharacteristic(req, res) {
   } else if (inputValue == 'Energetic'){
   query = `
     SELECT song.song_title, 
-    played_by.artist_name AS artist_name, song.spotify_id 
+    played_by.artist_name AS artist_name, song.spotify_id, song.song_id, a.genre
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
+    JOIN artist a ON played_by.artist_name = a.artist_name
     WHERE m.energy > .7 AND m.tempo > 60 AND m.popularity > 70 AND song.release_year > 2015
     GROUP BY song.song_title
     ORDER BY m.popularity DESC
@@ -406,9 +409,10 @@ function getCharacteristic(req, res) {
   } else if (inputValue == 'Gloomy') {
     query = `
     SELECT song.song_title, 
-    played_by.artist_name AS artist_name, song.spotify_id 
+    played_by.artist_name AS artist_name, song.spotify_id, song.song_id, a.genre
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
+    JOIN artist a ON played_by.artist_name = a.artist_name
     WHERE m.energy < .6 AND m.tempo < 90 AND m.danceability < .6 AND m.popularity > 70 AND song.release_year > 2015
     GROUP BY song.song_title
     ORDER BY m.popularity DESC
@@ -418,9 +422,10 @@ function getCharacteristic(req, res) {
   else if (inputValue == 'Acoustic') {
     query = `
     SELECT song.song_title, 
-    played_by.artist_name AS artist_name, song.spotify_id 
+    played_by.artist_name AS artist_name, song.spotify_id, song.song_id, a.genre
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
+    JOIN artist a ON played_by.artist_name = a.artist_name
     WHERE m.acousticness > .5 AND m.popularity > 70 AND song.release_year > 2015
     GROUP BY song.song_title
     ORDER BY m.popularity DESC
@@ -430,9 +435,10 @@ function getCharacteristic(req, res) {
   else if (inputValue == 'Dancing') {
     query = `
       SELECT song.song_title, 
-      played_by.artist_name AS artist_name, song.spotify_id 
+      played_by.artist_name AS artist_name, song.spotify_id, song.song_id, a.genre
       FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
       JOIN played_by ON played_by.song_id = m.Song_id
+      JOIN artist a ON played_by.artist_name = a.artist_name
       WHERE m.energy > .7 AND m.tempo > 60 AND m.danceability > .6 AND m.popularity > 70 AND song.release_year > 2015
       GROUP BY song.song_title
       ORDER BY m.popularity DESC
@@ -441,9 +447,10 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Happy') {
     query = `
-    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id 
+    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id, song.song_id, a.genre
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
+    JOIN artist a ON played_by.artist_name = a.artist_name
     WHERE m.explicit = "No" AND m.popularity > 70 AND m.musical_key ="A" AND m.mode = "Major" AND song.release_year > 2015
     GROUP BY song.song_title
     ORDER BY m.popularity DESC
@@ -452,9 +459,10 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'From the Stage') {
     query = `
-    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id 
+    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id, song.song_id, a.genre
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
+    JOIN artist a ON played_by.artist_name = a.artist_name
     WHERE m.popularity > 70 AND m.liveness > .7 AND song.song_title NOT LIKE "%Christmas%"
     GROUP BY song.song_title
     ORDER BY m.popularity DESC
@@ -463,9 +471,10 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Spoken Word') {
     query = `
-    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id 
+    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id, song.song_id, a.genre
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
+    JOIN artist a ON played_by.artist_name = a.artist_name
     WHERE m.popularity > 50 AND m.speechiness > .7
     GROUP BY song.song_title
     ORDER BY m.popularity DESC
@@ -474,9 +483,10 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Anxious') {
     query = `
-    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id 
+    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id, song.song_id, a.genre
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
+    JOIN artist a ON played_by.artist_name = a.artist_name
     WHERE m.popularity > 70 AND m.mode = "Minor" AND m.musical_key = "D#"
     GROUP BY song.song_id
     ORDER BY m.popularity DESC
@@ -485,11 +495,11 @@ function getCharacteristic(req, res) {
   }
   else if (inputValue == 'Work Out') {
     query = `
-    SELECT song.song_title, 
-    played_by.artist_name AS artist_name, song.spotify_id 
+    SELECT song.song_title, played_by.artist_name AS artist_name, song.spotify_id, song.song_id, a.genre
     FROM song JOIN musical_characteristics m ON m.song_id = song.song_id
     JOIN played_by ON played_by.song_id = m.Song_id
-    WHERE m.energy > .8 AND m.tempo > 90 AND m.popularity > 70 AND song.release_year > 2015 AND artist_name != "Pinkfong"
+    JOIN artist a ON played_by.artist_name = a.artist_name
+    WHERE m.energy > .8 AND m.tempo > 90 AND m.popularity > 70 AND song.release_year > 2015 AND played_by.artist_name != "Pinkfong"
     GROUP BY song.song_title
     ORDER BY m.popularity DESC
     LIMIT 20;

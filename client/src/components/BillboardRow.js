@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { slideDown, slideUp } from './Collapse';
-import BillboardInnerRow from './BillboardInnerRow';
+import InnerRow from './InnerRow';
 
 
 
@@ -34,7 +34,7 @@ export default class BillboardRow extends React.Component {
 
 			let billboardDivs = billboardList.map((song, i) => 
 				<div id="results" key={i} className="results-container">
-					<BillboardInnerRow song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
+					<InnerRow song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
 						release_date={song.release_date} release_year={song.release_year} acousticness={song.acousticness} danceability={song.danceability} 
 						duration_ms={song.duration_ms} energy={song.energy} explicit={song.explicit} instrumentalness={song.instrumentalness} musical_key={song.musical_key}
 						liveness={song.liveness} loudness={song.loudness} mode={song.mode} popularity={song.popularity} speechiness={song.speechiness} 
