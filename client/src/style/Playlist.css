@@ -27,8 +27,9 @@
 .dropdown {
   /* display: flex; */
   /* flex-flow: row nowrap; */
-  align-items: center;
   /* height: 30px; */
-  width: 250px;
-  padding: 0 10px;
+  align-items: center;
+  width: 275px;
+  padding: 5px 10px;
+  margin: 5px 5px 5px 5px;
 }

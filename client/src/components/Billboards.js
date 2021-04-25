@@ -220,8 +220,12 @@ export default class Billboards extends React.Component {
 
 				<div className="container billboards-container">
 			      <div className="jumbotron">
-			        <div className="h5">Billboards</div>
-
+					<center>
+					<div className="h2">Billboard Search</div>
+					<br></br>
+			        <div className="h6">Explore the <b>Billboard Hot 100 charts</b> throughout the decades.</div>
+					<br></br>
+					<br></br>
 			        <div className="years-container">
 			          <div className="dropdown-container">
 			            <select value={this.state.selectedYear} onChange={this.handleChange} name = 'selectedYear' className="dropdown" id="billboardsDropdown">
@@ -236,9 +240,10 @@ export default class Billboards extends React.Component {
 			            	<option select value> -- select a day -- </option>
 			            	{this.state.days}
 			            </select>
-			            <button className="submit-btn" id="billboardsSubmitBtn" onClick={this.submitBillboard}>Submit</button>
+			            <button className="button" id="billboardsSubmitBtn" onClick={this.submitBillboard}>Submit</button>
 			          </div>
-			        </div>
+					  <br></br>
+			        </div></center>
 			      </div>
 
 				

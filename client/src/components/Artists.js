@@ -70,12 +70,15 @@ export default class Artists extends React.Component {
 				<PageNavbar active="artists" />
 
 			    <div className="container artists-container">
+					<center>
 			    	<div className="jumbotron">
-			    		<div className="h5">Artists</div>
+					<div className="h2">Artist Search</div>
+					<br></br>
+			    		<div className="h6">Find songs by your favorite <b>artist</b>.</div>
 			    		<br></br>
 			    		<div className="input-container">
 			    			<input type='text' placeholder="Enter Artist Name" value={this.state.artistName} onChange={this.handleArtistNameChange} id="artistName" className="Artist-input"/>
-			    			<button id="submitArtistBtn" className="submit-btn" onClick={this.submitArtist}>Submit</button>
+			    			<button id="submitArtistBtn" className="button" onClick={this.submitArtist}>Submit</button>
 			    		</div>
 			    		<div className="header-container">
 			    			{/* <div className="h6">You may like ...</div> */}
@@ -103,7 +106,7 @@ export default class Artists extends React.Component {
 							</div>
 						</div>
 			     	</div>
-
+					 </center>
 			    </div>
 		    </div>
 		);

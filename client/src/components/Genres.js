@@ -72,14 +72,16 @@ export default class Genres extends React.Component {
 		return (
 			<div className="Genres">
 				<PageNavbar active="genres" />
-
+				<center>
 			    <div className="container genres-container">
 			    	<div className="jumbotron">
-			    		<div className="h5">Genres</div>
+					<div className="h2">Genre Search</div>
+					<br></br>
+			    		<div className="h6">Discover new musical <b>genres</b>.</div>
 			    		<br></br>
 			    		<div className="input-container">
 			    			<input type='text' placeholder="Enter Genre Name" value={this.state.genreName} onChange={this.handleGenreNameChange} id="genreName" className="Genre-input"/>
-			    			<button id="submitGenreBtn" className="submit-btn" onClick={this.submitGenre}>Submit</button>
+			    			<button id="submitGenreBtn" className="button" onClick={this.submitGenre}>Submit</button>
 			    		</div>
 			    	</div>
 
@@ -96,6 +98,7 @@ export default class Genres extends React.Component {
 						</div>
 			     	</div>
 			    </div>
+				</center>
 		    </div>
 		);
 	}

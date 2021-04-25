@@ -102,16 +102,19 @@ export default class Playlist extends React.Component {
 				<PageNavbar active="playlist" />
 
 				<div className="container characteristics-container">
+				<center>
 			      <div className="jumbotron">
-			        <div className="h5">Playlist Creator</div>
-
+				    <div className="h2">Playlist Search</div>
+					<br></br>
+			        <div className="h6">Find a playlist that suits your <b>mood</b>.</div>
+					<br></br>
 			        <div className="years-container">
 			          <div className="dropdown-container">
 			            <select value={this.state.selectedCharacteristic} onChange={this.handleChange} className="dropdown" id="characteristicsDropdown">
 			            	<option select value> -- select an option -- </option>
 			            	{this.state.characteristics}
 			            </select>
-			            <button className="submit-btn" id="characteristicsSubmitBtn" onClick={this.submitCharacteristic}>Submit</button>
+			            <button className="button" id="characteristicsSubmitBtn" onClick={this.submitCharacteristic}>Submit</button>
 			          </div>
 			        </div>
 			      </div>
@@ -127,6 +130,7 @@ export default class Playlist extends React.Component {
 			          </div>
 			        </div>
 			      </div>
+				  </center>
 			    </div>
 			</div>
 		);

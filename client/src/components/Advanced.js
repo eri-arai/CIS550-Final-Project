@@ -321,9 +321,12 @@ export default class Advanced extends React.Component {
 				<PageNavbar active="advanced" />
 
 				<div className="container billboards-container">
+				<center>
 			      <div className="jumbotron">
-			        <div className="h5">Advanced Search</div>
-
+				    <div className="h2">Advanced Search</div>
+					<br></br>
+			        <div className="h6">Discover new music with our <b>advanced search</b>.</div>
+					<br></br>
 			        <div className="years-container">
 			          <div className="dropdown-container">
 			            <select value={this.state.selectedAco} onChange={this.handleChange} name = 'selectedAco' className="dropdown" id="billboardsDropdown">
@@ -335,7 +338,7 @@ export default class Advanced extends React.Component {
 			            	{this.state.dans}
 			            </select>
 						<select value={this.state.selectedDur} onChange={this.handleChange} name = 'selectedDur' className="dropdown" id="billboardsDropdown">
-			            	<option select value> -- Duration in ms -- </option>
+			            	<option select value> -- Duration -- </option>
 			            	{this.state.durs}
 			            </select>
 						<select value={this.state.selectedEne} onChange={this.handleChange} name = 'selectedEne' className="dropdown" id="billboardsDropdown">
@@ -393,7 +396,9 @@ export default class Advanced extends React.Component {
 			            	<option select value> -- Peak Position -- </option>
 			            	{this.state.peas}
 			            </select>
-			            <button className="submit-btn" id="advancedSubmitBtn" onClick={this.submitAdvanced}>Submit</button>
+						<br></br>
+						<br></br>
+			            <button className="button" id="advancedSubmitBtn" onClick={this.submitAdvanced}>Submit</button>
 			          </div>
 			        </div>
 			      </div>
@@ -413,6 +418,7 @@ export default class Advanced extends React.Component {
 			          </div>
 			        </div>
 			      </div>
+				  </center>
 			    </div>
 			</div>
 		);

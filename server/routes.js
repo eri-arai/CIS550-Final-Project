@@ -697,10 +697,13 @@ function advancedSearch(req, res) {
   }
 
   if (spe == 1){
-    whereStatement = whereStatement.concat(term, 'mc.speechiness > 0.1');
+    whereStatement = whereStatement.concat(term, 'mc.speechiness > 0.066');
     term = ' AND ';
   } else if (spe == 2){
-    whereStatement = whereStatement.concat(term, 'mc.speechiness < 0.1');
+    whereStatement = whereStatement.concat(term, 'mc.speechiness >= 0.033 AND mc.speechiness <= 0.066');
+    term = ' AND ';
+  } else if (spe == 2){
+    whereStatement = whereStatement.concat(term, 'mc.speechiness < 0.033');
     term = ' AND ';
   }
 

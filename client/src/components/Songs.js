@@ -102,12 +102,15 @@ export default class Songs extends React.Component {
 				<PageNavbar active="songs" />
 
 			    <div className="container songs-container">
-			    	<div className="jumbotron">
-			    		<div className="h5">Songs</div>
+					<center>
+			    	<div className="jumbotron"> 
+					<div className="h2">Song Search</div>
+					<br></br>
+			    		<div className="h6">Have a song in mind? Find it now using our <b>song search.</b></div>
 			    		<br></br>
 			    		<div className="input-container">
 			    			<input type='text' placeholder="Enter Song Name" value={this.state.songName} onChange={this.handleSongNameChange} id="songName" className="Song-input"/>
-			    			<button id="submitSongBtn" className="submit-btn" onClick={this.submitSong}>Submit</button>
+			    			<button id="submitSongBtn" className="button" onClick={this.submitSong}>Submit</button>
 			    		</div>
 			    	</div>
 
@@ -125,6 +128,7 @@ export default class Songs extends React.Component {
 							</div>
 						</div>
 			      	</div>
+					</center>
 			    </div>
 		    </div>
 		);
