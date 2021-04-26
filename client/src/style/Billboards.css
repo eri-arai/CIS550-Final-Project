@@ -10,13 +10,11 @@ main { margin: auto; max-width: 1200px; }
   flex-flow: column wrap;
 } */
 
-
-
 .jumbotron {
   max-width: 1900px;
   /* max-height: 200px; */
   background-color:rgba(255, 255, 255, 0.900);
-  font-family: sans-serif;
+  /*font-family: sans-serif;*/
 }
 
 .song-container {
@@ -74,9 +72,6 @@ tr.expandable > td {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-
-  
-
 }
 
 tr.expandable > td > .inner {
@@ -103,9 +98,106 @@ tr.expandable > td > .inner {
   color: white;
 }
 
+.button:active {
+  background-color: #17476e;
+  box-shadow: 0 4px rgb(131, 131, 131);
+  transform: translateY(4px);
+}
+
 input {
   width: 25%;
   padding: 5px 12px;
   margin: 4px 0;
   box-sizing: border-box;
 }
+
+
+@import url("https://fonts.googleapis.com/css?family=Damion&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+.header {
+  font-family: "Roboto", sans-serif;
+}
+
+.h6 {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+
+.h2 {
+  font-size: calc(14px + 8vh);
+  line-height: calc(14px + 8vh);
+  text-shadow: 0 0 5px #ffffff, 0 0 15px #ffffff, 0 0 20px #4e9aff, 0 0 40px #00b7ff, 0 0 60px #16b5ff, 0 0 10px #00d9ff, 0 0 98px #001aff;
+    color: #ffffff;
+  font-family: "Damion", sans-serif;
+  text-align: center;
+  animation: blink 12s infinite;
+  -webkit-animation: blink 12s infinite;
+}
+
+
+@-webkit-keyframes blink {
+  20%,
+  24%,
+  55% {
+    color: rgb(0, 162, 255);
+    text-shadow: none;
+  }
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+  text-shadow: 0 0 5px #ffffff, 0 0 15px #ffffff, 0 0 20px #ffffff, 0 0 40px #ffffff, 0 0 60px #ffffff, 0 0 10px #ffffff, 0 0 98px #205eaf;
+    color: #ffffff;
+  }
+}
+/*205eaf*/
+@keyframes blink {
+  20%,
+  24%,
+  55% {
+    color: rgb(47, 137, 197);
+    text-shadow: none;
+  }
+
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+  text-shadow: 0 0 2px #ffffff, 0 0 3px #26606b, 0 0 5px #178194, 0 0 40px #ffffff, 0 0 60px #ffffff;
+    color: #072e77;
+  }
+}
+
+
+.h1 {
+  position: relative;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-size: 2em;
+  letter-spacing: 4px;
+  overflow: hidden;
+  background: linear-gradient(90deg, #000, #fff, #000);
+  background-repeat: no-repeat;
+  background-size: 80%;
+  animation: animate 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+@keyframes animate {
+  0% {
+    background-position: -500%;
+  }
+  100% {
+    background-position: 500%;
+  }
+}
+
