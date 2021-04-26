@@ -91,7 +91,7 @@ export default class Artists extends React.Component {
 			    			{this.state.recArtists}
 			    		</div> */}
 			    	</div>
-
+					</center>
 					<div className="jumbotron">
 						<div className="header-container">
 							<div className="headers">
@@ -106,7 +106,6 @@ export default class Artists extends React.Component {
 							</div>
 						</div>
 			     	</div>
-					 </center>
 			    </div>
 		    </div>
 		);

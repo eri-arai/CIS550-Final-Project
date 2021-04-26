@@ -113,7 +113,7 @@ export default class Songs extends React.Component {
 			    			<button id="submitSongBtn" className="button" onClick={this.submitSong}>Submit</button>
 			    		</div>
 			    	</div>
-
+					</center>
 					<div className="jumbotron">
 						<div className="song-container">
 							<div className="song">
@@ -128,7 +128,6 @@ export default class Songs extends React.Component {
 							</div>
 						</div>
 			      	</div>
-					</center>
 			    </div>
 		    </div>
 		);

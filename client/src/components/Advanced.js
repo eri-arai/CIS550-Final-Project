@@ -402,7 +402,7 @@ export default class Advanced extends React.Component {
 			          </div>
 			        </div>
 			      </div>
-
+				</center>
 				
 
 			      <div className="jumbotron">
@@ -418,7 +418,6 @@ export default class Advanced extends React.Component {
 			          </div>
 			        </div>
 			      </div>
-				  </center>
 			    </div>
 			</div>
 		);

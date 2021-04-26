@@ -72,8 +72,8 @@ export default class Genres extends React.Component {
 		return (
 			<div className="Genres">
 				<PageNavbar active="genres" />
-				<center>
 			    <div className="container genres-container">
+				<center>
 			    	<div className="jumbotron">
 					<div className="h2">Genre Search</div>
 					<br></br>
@@ -84,7 +84,7 @@ export default class Genres extends React.Component {
 			    			<button id="submitGenreBtn" className="button" onClick={this.submitGenre}>Submit</button>
 			    		</div>
 			    	</div>
-
+					</center>
 					<div className="jumbotron">
 						<div className="header-container">
 							<div className="headers">
@@ -98,7 +98,6 @@ export default class Genres extends React.Component {
 						</div>
 			     	</div>
 			    </div>
-				</center>
 		    </div>
 		);
 	}

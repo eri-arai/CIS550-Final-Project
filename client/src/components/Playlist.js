@@ -118,6 +118,7 @@ export default class Playlist extends React.Component {
 			          </div>
 			        </div>
 			      </div>
+				  </center>
 			      <div className="jumbotron">
 			        <div className="song-container">
 			          <div className="song">
@@ -130,7 +131,6 @@ export default class Playlist extends React.Component {
 			          </div>
 			        </div>
 			      </div>
-				  </center>
 			    </div>
 			</div>
 		);
