@@ -253,6 +253,12 @@ export default class SongsRow extends React.Component {
 							<div className="data">Valence: {this.props.valence}</div>
 							<div className="data"><a href={spotify_link} target="_blank">Find it on Spotify</a></div>
 						  </div>
+
+						  <div className="headers">
+						  	<br></br>
+						  	<div className="header"><strong>Bar Chart of Musical Characteristics</strong></div>
+							</div>
+
 						  	<ProgressBar variant={acoVar} now={100*this.props.acousticness} label={`Acousticness`}></ProgressBar>
 							<ProgressBar variant={danVar} now={100*this.props.danceability} label={`Danceability`}></ProgressBar>
 							<ProgressBar variant={durVar} now={normDur} label={`Duration`}></ProgressBar>

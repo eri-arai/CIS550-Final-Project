@@ -1,5 +1,9 @@
 main { margin: auto; max-width: 1200px; }
 
+@import url("https://fonts.googleapis.com/css?family=Damion&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Lobster&display=swap");
+
 .container {
   max-width: fit-content;
   max-width: 1200px;
@@ -42,8 +46,6 @@ main { margin: auto; max-width: 1200px; }
   flex: 1 0 25%;
   padding: 0 10px;
   margin: 5px;
-
-
 }
 
 .songResults .week_position{
@@ -111,10 +113,6 @@ input {
   box-sizing: border-box;
 }
 
-
-@import url("https://fonts.googleapis.com/css?family=Damion&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
-
 .header {
   font-family: "Roboto", sans-serif;
 }
@@ -123,15 +121,21 @@ input {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
 
+.h3 {
+  font-size: calc(1px + 4vh);
+  line-height: calc(1px + 4vh);
+  font-family: "Lobster", sans-serif;
+}
+
 .h2 {
-  font-size: calc(14px + 8vh);
-  line-height: calc(14px + 8vh);
+  font-size: calc(12px + 8vh);
+  line-height: calc(12px + 8vh);
   text-shadow: 0 0 5px #ffffff, 0 0 15px #ffffff, 0 0 20px #4e9aff, 0 0 40px #00b7ff, 0 0 60px #16b5ff, 0 0 10px #00d9ff, 0 0 98px #001aff;
     color: #ffffff;
   font-family: "Damion", sans-serif;
   text-align: center;
-  animation: blink 12s infinite;
-  -webkit-animation: blink 12s infinite;
+  animation: blink 5s infinite;
+  -webkit-animation: blink 5s infinite;
 }
 
 
@@ -173,31 +177,6 @@ input {
   100% {
   text-shadow: 0 0 2px #ffffff, 0 0 3px #26606b, 0 0 5px #178194, 0 0 40px #ffffff, 0 0 60px #ffffff;
     color: #072e77;
-  }
-}
-
-
-.h1 {
-  position: relative;
-  font-family: sans-serif;
-  text-transform: uppercase;
-  font-size: 2em;
-  letter-spacing: 4px;
-  overflow: hidden;
-  background: linear-gradient(90deg, #000, #fff, #000);
-  background-repeat: no-repeat;
-  background-size: 80%;
-  animation: animate 3s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: rgba(255, 255, 255, 0);
-}
-
-@keyframes animate {
-  0% {
-    background-position: -500%;
-  }
-  100% {
-    background-position: 500%;
   }
 }
 

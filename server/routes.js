@@ -708,13 +708,28 @@ function advancedSearch(req, res) {
   }
 
   if (tem == 1){
-    whereStatement = whereStatement.concat(term, 'mc.tempo > 120');
+    whereStatement = whereStatement.concat(term, 'mc.tempo >= 200');
     term = ' AND ';
   } else if (tem == 2){
-    whereStatement = whereStatement.concat(term, 'mc.tempo >= 60 AND mc.tempo <=120');
+    whereStatement = whereStatement.concat(term, 'mc.tempo >= 168 AND mc.tempo <= 200');
     term = ' AND ';
   } else if (tem == 3){
-    whereStatement = whereStatement.concat(term, 'mc.tempo < 60');
+    whereStatement = whereStatement.concat(term, 'mc.tempo >= 120 AND mc.tempo <= 168');
+    term = ' AND ';
+  } else if (tem == 4){
+    whereStatement = whereStatement.concat(term, 'mc.tempo >= 108 AND mc.tempo <= 120');
+    term = ' AND ';
+  } else if (tem == 5){
+    whereStatement = whereStatement.concat(term, 'mc.tempo >= 76 AND mc.tempo <= 108');
+    term = ' AND ';
+  } else if (tem == 6){
+    whereStatement = whereStatement.concat(term, 'mc.tempo >= 60 AND mc.tempo <= 76');
+    term = ' AND ';
+  } else if (tem == 7){
+    whereStatement = whereStatement.concat(term, 'mc.tempo >= 40 AND mc.tempo <= 60');
+    term = ' AND ';
+  } else if (tem == 8){
+    whereStatement = whereStatement.concat(term, 'mc.tempo < 40');
     term = ' AND ';
   }
 

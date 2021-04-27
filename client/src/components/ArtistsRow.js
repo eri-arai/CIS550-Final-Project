@@ -220,6 +220,12 @@ export default class ArtistsRow extends React.Component {
 							<div className="data">Valence: {this.props.valence}</div>
 							<div className="data"></div>
 						  </div>
+
+						  <div className="headers">
+						  	<br></br>
+						  	<div className="header"><strong>Bar Chart of Average Musical Characteristics</strong></div>
+							</div>
+
 						  <ProgressBar variant={acoVar} now={100*this.props.acousticness} label={`Acousticness`}></ProgressBar>
 							<ProgressBar variant={danVar} now={100*this.props.danceability} label={`Danceability`}></ProgressBar>
 							<ProgressBar variant={durVar} now={normDur} label={`Duration`}></ProgressBar>
@@ -238,7 +244,6 @@ export default class ArtistsRow extends React.Component {
 								<div className="header"><strong>Top Weeks On Chart: {this.props.weeks_on_chart}</strong></div>
 								<div className="header"><strong>Top Peak Position: {this.props.peak_position}</strong></div>
 							</div>
-							
 						  	<div className="results-container" id="results">
 			    				{this.state.recArtistsInner}
 			    			</div>

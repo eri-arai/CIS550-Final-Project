@@ -34,7 +34,10 @@ export default class PageNavbar extends React.Component {
 			<div className="PageNavbar">
 				{/* <nav className="navbar navbar-expand-lg navbar-light bg-light"> */}
 				<nav className="navbar navbar-expand navbar-light bg-light">
-			      <span className="navbar-brand center">Spotify Project</span>
+				<img className="iconImg" src="searchMusic.png" width="40" height="40"></img>		
+				<span className="navbar-brand center h3">
+				Searchify
+				</span>
 			      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
 			        <div className="navbar-nav">
 			        {this.state.navDivs}

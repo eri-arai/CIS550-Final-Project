@@ -119,13 +119,11 @@ export default class Advanced extends React.Component {
 
 		this.setState({
 			
-			
 			acos: [<option value={'1'}>{'High acousticness'}</option>, <option value={'2'}>{'Medium acousticness'}</option>, <option value={'3'}>{'Low acousticness'}</option>],
 			dans: [<option value={'1'}>{'High danceability'}</option>, <option value={'2'}>{'Medium danceability'}</option>, <option value={'3'}>{'Low danceability'}</option>],
 			durs: [<option value={'1'}>{'Long duration'}</option>, <option value={'2'}>{'Medium duration'}</option>, <option value={'3'}>{'Short duration'}</option>],
 			enes: [<option value={'1'}>{'High energy'}</option>, <option value={'2'}>{'Medium energy'}</option>, <option value={'3'}>{'Low energy'}</option>],
 			exps: [<option value={'1'}>{'Not explicit'}</option>, <option value={'2'}>{'Explicit'}</option>],
-
 			inss: [<option value={'1'}>{'High instrumentalness'}</option>, <option value={'2'}>{'Medium instrumentalness'}</option>, <option value={'3'}>{'Low instrumentalness'}</option>],
 			livs: [<option value={'1'}>{'High liveness'}</option>, <option value={'2'}>{'Medium liveness'}</option>, <option value={'3'}>{'Low livenless'}</option>],
 			lous: [<option value={'1'}>{'Loud'}</option>, <option value={'2'}>{'Medium'}</option>, <option value={'3'}>{'Soft'}</option>],
@@ -134,10 +132,11 @@ export default class Advanced extends React.Component {
 			<option value={'3'}>{'D#'}</option>, <option value={'4'}>{'E'}</option>, <option value={'5'}>{'F'}</option>, 
 			<option value={'6'}>{'F#'}</option>, <option value={'7'}>{'G'}</option>, <option value={'8'}>{'G#'}</option>, 
 			<option value={'9'}>{'A'}</option>, <option value={'10'}>{'A#'}</option>, <option value={'11'}>{'B'}</option>],
-
 			pops: [<option value={'1'}>{'High popularity'}</option>, <option value={'2'}>{'Medium popularity'}</option>, <option value={'3'}>{'Low popularity'}</option>],
 			spes: [<option value={'1'}>{'High speechiness'}</option>, <option value={'2'}>{'Medium speechiness'}</option>, <option value={'3'}>{'Low speechiness'}</option>],
-			tems: [<option value={'1'}>{'Fast tempo'}</option>, <option value={'2'}>{'Medium tempo'}</option>, <option value={'3'}>{'Slow tempo'}</option>],
+			tems: [<option value={'1'}>{'Prestissimo (>200 BPM)'}</option>, <option value={'2'}>{'Vivace/Presto (168-200 BPM)'}</option>, <option value={'3'}>{'Allegro (120-168 BPM)'}</option>
+			, <option value={'4'}>{'Moderato (108-120 BPM)'}</option>, <option value={'5'}>{'Andante (76-108 BPM)'}</option>, <option value={'6'}>{'Larghetto/Adagio (60-76 BPM)'}</option>, <option value={'7'}>{'Largo (40-60 BPM)'}</option>
+			, <option value={'8'}>{'Grave/Larghissimo (<40 BPM)'}</option>],
 			vals: [<option value={'1'}>{'High valence'}</option>, <option value={'2'}>{'Medium valence'}</option>, <option value={'3'}>{'Low valence'}</option>],
 			decs: [<option value={'1'}>{'2010s'}</option>, <option value={'2'}>{'2000s'}</option>, <option value={'3'}>{'1990s'}</option>
 			, <option value={'4'}>{'1980s'}</option>, <option value={'5'}>{'1970s'}</option>, <option value={'6'}>{'1960s'}</option>, <option value={'7'}>{'1950s'}</option>
@@ -370,8 +369,6 @@ export default class Advanced extends React.Component {
 			            	<option select value> -- Musical Key -- </option>
 			            	{this.state.muss}
 			            </select>
-						
-
 						<select value={this.state.selectedPop} onChange={this.handleChange} name = 'selectedPop' className="dropdown" id="billboardsDropdown">
 			            	<option select value> -- Popularity -- </option>
 			            	{this.state.pops}
