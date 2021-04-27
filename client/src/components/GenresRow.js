@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ProgressBar from 'react-bootstrap/ProgressBar'
 import { slideDown, slideUp } from './Collapse';
 import GenresInnerRow from './GenresInnerRow';
 
@@ -83,6 +84,102 @@ export default class GenresRow extends React.Component {
 			release_year = this.props.release_year;
 		}
 
+		var acoVar, danVar, durVar, eneVar, insVar, livVar, louVar, popVar, speVar, temVar, valVar = '';
+
+			if (this.props.acousticness > 0.66){
+				acoVar = 'success'
+			} else if (this.props.acousticness < 0.33){
+				acoVar = 'danger'
+			} else {
+				acoVar = 'warning'
+			}
+
+			if (this.props.danceability > 0.66){
+				danVar = 'success'
+			} else if (this.props.danceability < 0.33){
+				danVar = 'danger'
+			} else {
+				danVar = 'warning'
+			}
+
+			var normDur = 50*Math.log(100/5333365*(this.props.duration_ms - 4937))/Math.log(10);
+			if (normDur > 66){
+				durVar = 'success'
+			} else if (normDur < 33){
+				durVar = 'danger'
+			} else {
+				durVar = 'warning'
+			}
+
+			if (this.props.energy > 0.66){
+				eneVar = 'success'
+			} else if (this.props.energy < 0.33){
+				eneVar = 'danger'
+			} else {
+				eneVar = 'warning'
+			}
+
+			var normInst = 50*Math.log(100*this.props.instrumentalness)/Math.log(10);
+			if (normInst > 66){
+				insVar = 'success'
+			} else if (normInst < 33){
+				insVar = 'danger'
+			} else {
+				insVar = 'warning'
+			}
+
+			var normLive = 50*Math.log(100*this.props.liveness)/Math.log(10);
+			if (normLive > 66){
+				livVar = 'success'
+			} else if (normLive < 33){
+				livVar = 'danger'
+			} else {
+				livVar = 'warning'
+			}
+
+			var normLoud = 100/64*(this.props.loudness + 60);
+			if (normLoud > 66){
+				louVar = 'success'
+			} else if (normLoud < 33){
+				louVar = 'danger'
+			} else {
+				louVar = 'warning'
+			}
+
+			if (this.props.popularity > 66){
+				popVar = 'success'
+			} else if (this.props.popularity < 33){
+				popVar = 'danger'
+			} else {
+				popVar = 'warning'
+			}
+
+			var normSpeech = 50*Math.log(100*this.props.speechiness)/Math.log(10);
+			if (normSpeech > 66){
+				speVar = 'success'
+			} else if (normSpeech < 33){
+				speVar = 'danger'
+			} else {
+				speVar = 'warning'
+			}
+
+			var normTemp = 100/243.5*(this.props.tempo);
+			if (normTemp > 66){
+				temVar = 'success'
+			} else if (normTemp < 33){
+				temVar = 'danger'
+			} else {
+				temVar = 'warning'
+			}
+
+			if (this.props.valence > 0.66){
+				valVar = 'success'
+			} else if (this.props.valence < 0.33){
+				valVar = 'danger'
+			} else {
+				valVar = 'warning'
+			}
+
 		// this will handle songs that have musical characteristics
 		if (this.props.duration_ms > 0) {
 			return [
@@ -122,6 +219,18 @@ export default class GenresRow extends React.Component {
 							<div className="data">Valence: {this.props.valence}</div>
 							<div className="data"></div>
 						  </div>
+						  <ProgressBar variant={acoVar} now={100*this.props.acousticness} label={`Acousticness`}></ProgressBar>
+							<ProgressBar variant={danVar} now={100*this.props.danceability} label={`Danceability`}></ProgressBar>
+							<ProgressBar variant={durVar} now={normDur} label={`Duration`}></ProgressBar>
+							<ProgressBar variant={eneVar} now={100*this.props.energy} label={`Energy`}></ProgressBar>
+							<ProgressBar variant={insVar} now={normInst} label={`Instrumentalness`}></ProgressBar>
+							<ProgressBar variant={livVar} now={normLive} label={`Liveness`}></ProgressBar>
+							<ProgressBar variant={louVar} now={normLoud} label={`Loudness`}></ProgressBar>
+							<ProgressBar variant={popVar} now={this.props.popularity} label={`Popularity`}></ProgressBar>
+							<ProgressBar variant={speVar} now={normSpeech} label={`Speechiness`}></ProgressBar>
+							<ProgressBar variant={temVar} now={normTemp} label={`Tempo`}></ProgressBar>
+							<ProgressBar variant={valVar} now={100*this.props.valence} label={`Valence`}></ProgressBar>
+
 							<hr></hr>
 							<div className="headers">
 								<div className="header"><strong>Top Artists</strong></div>
@@ -129,6 +238,7 @@ export default class GenresRow extends React.Component {
 								<div className="header"><strong>Top Weeks On Chart: {this.props.weeks_on_chart}</strong></div>
 								<div className="header"><strong>Top Peak Position: {this.props.peak_position}</strong></div>
 							</div>
+							
 						  	<div className="results-container" id="results">
 			    				{this.state.recGenresInner}
 			    			</div>

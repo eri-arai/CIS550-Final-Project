@@ -201,3 +201,24 @@ input {
   }
 }
 
+.progress {
+  display: flex;
+  height: 1.5rem;
+  overflow: hidden;
+  font-size: .75rem;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: .25rem;
+  padding: 1px;
+}
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  color: #000;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #007bff;
+  transition: width .6s ease;
+}
