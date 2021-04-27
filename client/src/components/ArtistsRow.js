@@ -102,7 +102,8 @@ export default class ArtistsRow extends React.Component {
 				danVar = 'warning'
 			}
 
-			var normDur = 50*Math.log(100/5333365*(this.props.duration_ms - 4937))/Math.log(10);
+			// var normDur = 50*Math.log(100/5333365*(this.props.duration_ms - 4937))/Math.log(10);
+			var normDur = 50*Math.log(100/1500000*(this.props.duration_ms - 4937))/Math.log(10);
 			if (normDur > 66){
 				durVar = 'success'
 			} else if (normDur < 33){

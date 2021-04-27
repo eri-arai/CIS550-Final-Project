@@ -568,13 +568,16 @@ function advancedSearch(req, res) {
   }
 
   if (dur == 1){
-    whereStatement = whereStatement.concat(term, 'mc.duration_ms > 133333');
+    // whereStatement = whereStatement.concat(term, 'mc.duration_ms > 133333');
+    whereStatement = whereStatement.concat(term, 'mc.duration_ms > 333000');
     term = ' AND ';
   } else if (dur == 2){
-    whereStatement = whereStatement.concat(term, 'mc.duration_ms >= 66666 AND mc.duration_ms <= 133333');
+    // whereStatement = whereStatement.concat(term, 'mc.duration_ms >= 66666 AND mc.duration_ms <= 133333');
+    whereStatement = whereStatement.concat(term, 'mc.duration_ms >= 73500 AND mc.duration_ms <= 333000');
     term = ' AND ';
   } else if (dur == 3){
-    whereStatement = whereStatement.concat(term, 'mc.duration_ms < 66666');
+    // whereStatement = whereStatement.concat(term, 'mc.duration_ms < 66666');
+    whereStatement = whereStatement.concat(term, 'mc.duration_ms < 73500');
     term = ' AND ';
   }
 
