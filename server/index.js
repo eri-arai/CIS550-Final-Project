@@ -20,6 +20,7 @@ app.get('/billboardss/:song', routes.getBillboardChartByWeekAndSong);
 app.get('/billboardsy/', routes.getBillboardChartYear);
 app.get('/billboardsm/', routes.getBillboardChartMonth);
 app.get('/billboardsd/:year/:month', routes.getBillboardChartDay);
+app.get('/billboardsurl/:week', routes.getBillboardURL);
 
 
 app.get('/songs', routes.getAllSongs);

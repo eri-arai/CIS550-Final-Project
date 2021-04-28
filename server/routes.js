@@ -91,16 +91,6 @@ function getBillboardChartByWeek(req, res) {
   inputWeek = inputWeek.replace(/-/g,'/');
   console.log(inputWeek);
 
-
-  // var query = `
-  //   SELECT *
-  //   FROM entry e JOIN song s ON e.song_id = s.song_id
-  //   JOIN played_by pb ON s.song_id = pb.song_id
-  //   JOIN musical_characteristics mc ON s.song_id = mc.song_id
-  //   JOIN artist a ON pb.artist_name = a.artist_name
-  //   WHERE e.week_id =  '${inputWeek}'
-  //   ORDER BY e.week_position;
-  // `;
   var query = `
     SELECT s.song_id, s.song_title, a.artist_name, a.genre, e.week_position
     FROM entry e JOIN song s ON e.song_id = s.song_id
@@ -108,6 +98,24 @@ function getBillboardChartByWeek(req, res) {
     JOIN artist a ON pb.artist_name = a.artist_name
     WHERE e.week_id =  '${inputWeek}'
     ORDER BY e.week_position;
+  `;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+};
+
+// Get a specific billboard url
+function getBillboardURL(req, res) {
+  var inputWeek = req.params.week;
+  inputWeek = inputWeek.replace(/-/g,'/');
+
+  var query = `
+    SELECT wc.url
+    FROM weekly_chart wc 
+    WHERE wc.week_id =  '${inputWeek}'
   `;
   connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
@@ -224,12 +232,7 @@ function getAllArtists(req, res) {
 function getArtistByName(req, res) {
   var inputName = req.params.name;
   console.log(inputName);
-  // var query = `
-  //   SELECT *
-  //   FROM artist a
-  //   WHERE a.artist_name LIKE '%${inputName}%'
-  //   ORDER BY LENGTH(a.artist_name), a.artist_name;
-  // `;
+  
   var query = `
   SELECT a.artist_name, a.genre, COUNT(*) AS songs_in_database, TRUNCATE(AVG(acousticness),4) AS acousticness, TRUNCATE(AVG(danceability),4) AS danceability, 
   TRUNCATE(AVG(duration_ms),4) AS duration_ms, TRUNCATE(AVG(energy),4) AS energy, TRUNCATE(AVG(instrumentalness),4) AS instrumentalness, 
@@ -789,16 +792,7 @@ function advancedSearch(req, res) {
 
   console.log("whereStatement: ", whereStatement);
 
-  // query = `
-  //   SELECT s.song_title, pb.artist_name AS artist_name, s.spotify_id 
-  //   FROM song s
-  //   JOIN played_by pb ON s.song_id = pb.song_id
-  //   JOIN musical_characteristics mc ON s.song_id = mc.song_id
-  //   ${whereStatement}
-  //   ORDER BY mc.popularity DESC
-  //   LIMIT 25
-  //   ;
-  // `;
+  
   query = `
     SELECT s.song_title, pb.artist_name AS artist_name, a.genre, s.song_id
     FROM song s
@@ -811,11 +805,7 @@ function advancedSearch(req, res) {
     ;
   `;
 
-  // s.peak_position, s.weeks_on_chart, s.release_date, s.release_year,
-  //   mc.acousticness, mc.danceability, mc.duration_ms, mc.energy,
-  //   mc.explicit, mc.instrumentalness, mc.liveness, mc.loudness,
-  //   mc.mode, mc.musical_key, mc.popularity, mc.speechiness, mc.tempo, 
-  //   mc.valence, s.spotify_id
+  
 
 
   console.log("query: ", query);
@@ -838,6 +828,7 @@ module.exports = {
   getBillboardChartYear: getBillboardChartYear,
   getBillboardChartMonth: getBillboardChartMonth,
   getBillboardChartDay: getBillboardChartDay,
+  getBillboardURL: getBillboardURL,
   getAllSongs: getAllSongs,
   getSongsByTitle: getSongsByTitle,
   getSongsByVagueTitle:getSongsByVagueTitle,

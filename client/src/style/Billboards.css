@@ -201,3 +201,7 @@ input {
   background-color: #007bff;
   transition: width .6s ease;
 }
+
+.url {
+  text-align: center;
+}

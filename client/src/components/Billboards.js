@@ -20,6 +20,7 @@ export default class Billboards extends React.Component {
 			billboards: [],
 			songs: []
 			// , songsTest: []
+			, url: []
 		};
 
 		this.submitBillboard = this.submitBillboard.bind(this);
@@ -191,24 +192,40 @@ export default class Billboards extends React.Component {
 				
 			);
 
-			// //test
-			// let songDivsTest = songList.map((song, i) => 
-			// 	// <RecommendationsRow key={recommendation.id} movie={recommendation} />
-			// 	<div id="results" key={i} className="results-container">
-			// 		<BillboardRowTest song_title={song.song_title} artist_name={song.artist_name} week_position={song.week_position} peak_position={song.peak_position} weeks_on_chart={song.weeks_on_chart}
-			// 		release_date={song.release_date} release_year={song.release_year} acousticness={song.acousticness} danceability={song.danceability} 
-			// 		duration_ms={song.duration_ms} energy={song.energy} explicit={song.explicit} instrumentalness={song.instrumentalness} musical_key={song.musical_key}
-			// 		liveness={song.liveness} loudness={song.loudness} mode={song.mode} popularity={song.popularity} speechiness={song.speechiness} 
-			// 		tempo={song.tempo} valence={song.valence} genre={song.genre}/>
-			// 	</div>
-				
-			// );
+			
 
 			this.setState({
 				songs: songDivs,
 				
 
 			});
+		});
+
+		console.log("http://localhost:8081/billboardsurl/" + fixed);
+		fetch("http://localhost:8081/billboardsurl/" + fixed,
+		{
+		  method: 'GET' // The type of HTTP request.
+		}).then(res => {
+		  // Convert the response data to a JSON.
+      		return res.json();
+		}, err => {
+		  // Print the error if there is one.
+		  console.log(err);
+		}).then(urlList => {
+		  if (!urlList) return;
+		  // Map each dayObj in genreList to an HTML element:
+		  let urlDivs = urlList.map((urlObj, i) =>
+		 	//  <option value={urlObj.url}>{urlObj.url}</option>  
+			<div className="url"><a href={urlObj.url} target="_blank">Access the chart on Billboard.com</a></div>
+
+		  );
+		  // Set the state of the days list to the value returned by the HTTP response from the server.
+		  this.setState({
+        	url: urlDivs
+		  });
+		}, err => {
+		  // Print the error if there is one.
+		  console.log(err);
 		});
 	}
 
@@ -256,6 +273,9 @@ export default class Billboards extends React.Component {
 			          </div>
 			          <div className="song-container" id="results">
 			            {this.state.songs}
+			          </div>
+					  <div className="song-container" id="results">
+			            {this.state.url}
 			          </div>
 			        </div>
 			      </div>
