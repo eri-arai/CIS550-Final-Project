@@ -16,6 +16,7 @@ export default class Advanced extends React.Component {
 			selectedEne: "",
 			selectedExp: "",
 
+			selectedGen: "",
 			selectedIns: "",
 			selectedLiv: "",
 			selectedLou: "",
@@ -36,6 +37,7 @@ export default class Advanced extends React.Component {
 			enes: [],
 			exps: [], 
 
+			genr: [],
 			inss: [], 
 			livs: [], 
 			lous: [], 
@@ -124,6 +126,9 @@ export default class Advanced extends React.Component {
 			durs: [<option value={'1'}>{'Long duration'}</option>, <option value={'2'}>{'Medium duration'}</option>, <option value={'3'}>{'Short duration'}</option>],
 			enes: [<option value={'1'}>{'High energy'}</option>, <option value={'2'}>{'Medium energy'}</option>, <option value={'3'}>{'Low energy'}</option>],
 			exps: [<option value={'1'}>{'Not explicit'}</option>, <option value={'2'}>{'Explicit'}</option>],
+			genr: [<option value={'1'}>{'Blues'}</option>, <option value={'2'}>{'Classical'}</option>, <option value={'3'}>{'Country'}</option>
+			, <option value={'4'}>{'Electronic'}</option>, <option value={'5'}>{'Hip Hop'}</option>, <option value={'6'}>{'Jazz'}</option>, <option value={'7'}>{'Metal'}</option>
+			, <option value={'8'}>{'Pop'}</option>, <option value={'9'}>{'Rock'}</option>, <option value={'10'}>{'R&B and Soul'}</option>],
 			inss: [<option value={'1'}>{'High instrumentalness'}</option>, <option value={'2'}>{'Medium instrumentalness'}</option>, <option value={'3'}>{'Low instrumentalness'}</option>],
 			livs: [<option value={'1'}>{'High liveness'}</option>, <option value={'2'}>{'Medium liveness'}</option>, <option value={'3'}>{'Low livenless'}</option>],
 			lous: [<option value={'1'}>{'Loud'}</option>, <option value={'2'}>{'Medium'}</option>, <option value={'3'}>{'Soft'}</option>],
@@ -191,6 +196,11 @@ export default class Advanced extends React.Component {
 				selectedExp: value
 			});
 			this.selectedExp = value;
+		} else if (name == 'selectedGen'){
+			this.setState({
+				selectedGen: value
+			});
+			this.selectedGen = value;
 		} else if (name == 'selectedIns'){
 			this.setState({
 				selectedIns: value
@@ -263,6 +273,7 @@ export default class Advanced extends React.Component {
 		if (this.selectedEne === undefined) this.selectedEne = 0;
 		if (this.selectedExp === undefined) this.selectedExp = 0;
 
+		if (this.selectedGen === undefined) this.selectedGen = 0;
 		if (this.selectedIns === undefined) this.selectedIns = 0;
 		if (this.selectedLiv === undefined) this.selectedLiv = 0;
 		if (this.selectedLou === undefined) this.selectedLou = 0;
@@ -280,7 +291,7 @@ export default class Advanced extends React.Component {
 		
 		// var fixed = this.state.selectedAdvanced.replace(/\//g,"-")
 		var fixed = this.selectedAco + "/" + this.selectedDan + "/" + this.selectedDur + "/" + this.selectedEne + "/" + this.selectedExp
-		+ "/" + this.selectedIns + "/" + this.selectedLiv + "/" + this.selectedLou + "/" + this.selectedMod + "/" + this.selectedMus
+		+ "/" + this.selectedGen + "/" + this.selectedIns + "/" + this.selectedLiv + "/" + this.selectedLou + "/" + this.selectedMod + "/" + this.selectedMus
 		+ "/" + this.selectedPop + "/" + this.selectedSpe + "/" + this.selectedTem + "/" + this.selectedVal + "/" + this.selectedDec + "/" + this.selectedPea
 		
 		// /advanced/:aco/:dan/:dur/:ene/:exp/:ins/:liv/:lou/:mod/:mus/:pop/:spe/:tem/:val
@@ -348,7 +359,10 @@ export default class Advanced extends React.Component {
 			            	<option select value> -- Explicit -- </option>
 			            	{this.state.exps}
 			            </select>
-
+						<select value={this.state.selectedGen} onChange={this.handleChange} name = 'selectedGen' className="dropdown" id="billboardsDropdown">
+			            	<option select value> -- Genre -- </option>
+			            	{this.state.genr}
+			            </select>
 						<select value={this.state.selectedIns} onChange={this.handleChange} name = 'selectedIns' className="dropdown" id="billboardsDropdown">
 			            	<option select value> -- Instrumentalness -- </option>
 			            	{this.state.inss}

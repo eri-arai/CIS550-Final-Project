@@ -535,6 +535,7 @@ function advancedSearch(req, res) {
   var dur = req.params.dur;
   var ene = req.params.ene;
   var exp = req.params.exp;
+  var gen = req.params.gen;
   var ins = req.params.ins;
   var mus = req.params.mus;
   var liv = req.params.liv;
@@ -600,6 +601,38 @@ function advancedSearch(req, res) {
     term = ' AND ';
   } else if (exp == 2){
     whereStatement = whereStatement.concat(term, 'mc.explicit = \"Yes\"');
+    term = ' AND ';
+  }
+
+  if (gen == 1){
+    whereStatement = whereStatement.concat(term, '((a.genre = \"blues\") OR (a.genre = \"blues rock\"))');
+    term = ' AND ';
+  } else if (gen == 2){
+    whereStatement = whereStatement.concat(term, '((a.genre = \"classical\") OR (a.genre = \"classical performance\"))');
+    term = ' AND ';
+  } else if (gen == 3){
+    whereStatement = whereStatement.concat(term, '((a.genre = \"country\") OR (a.genre = \"country rock\"))');
+    term = ' AND ';
+  } else if (gen == 4){
+    whereStatement = whereStatement.concat(term, 'a.genre = \"electronica\"');
+    term = ' AND ';
+  } else if (gen == 5){
+    whereStatement = whereStatement.concat(term, '((a.genre = \"hip hop\") OR (a.genre = \"rap\"))');
+    term = ' AND ';
+  } else if (gen == 6){
+    whereStatement = whereStatement.concat(term, '((a.genre = \"cool jazz\") OR (a.genre = \"jazz\"))');
+    term = ' AND ';
+  } else if (gen == 7){
+    whereStatement = whereStatement.concat(term, '((a.genre = \"alternative metal\") OR (a.genre = \"metal\"))');
+    term = ' AND ';
+  } else if (gen == 8){
+    whereStatement = whereStatement.concat(term, '((a.genre = \"pop\") OR (a.genre = \"dance pop\"))');
+    term = ' AND ';
+  } else if (gen == 9){
+    whereStatement = whereStatement.concat(term, 'a.genre = \"rock\"');
+    term = ' AND ';
+  } else if (gen == 10){
+    whereStatement = whereStatement.concat(term, '((a.genre = \"rhythm and blues\") OR (a.genre = \"r&b\") OR (a.genre = \"soul\"))');
     term = ' AND ';
   }
 
